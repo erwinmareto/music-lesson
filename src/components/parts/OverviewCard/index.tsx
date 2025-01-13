@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const OverviewCard = ({ icon, category, total }: OverviewCardProps) => {
   return (
-    <Card className="grid col-span-3 items-end gap-2 p-4">
+    <Card className="grid col-span-12 items-end gap-2 p-4 md:col-span-6 lg:col-span-3 max-sm:flex">
       <div className="w-10 h-10 flex justify-center items-center bg-slate-200 rounded-lg">
         {icon}
       </div>
