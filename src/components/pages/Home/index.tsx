@@ -27,6 +27,7 @@ const HomePage = () => {
         <h1 className="font-semibold text-4xl">Overview</h1>
 
         <div className="flex gap-4 max-sm:justify-between">
+          {/* student and teacher count */}
           <ReactQuery
             queryResult={userCountQuery}
             render={(data) => (
@@ -45,6 +46,7 @@ const HomePage = () => {
           />
         </div>
         <div className="grid grid-cols-12 gap-4">
+          {/* total instrument count */}
           <ReactQuery
             queryResult={instrumentCountQuery}
             render={(data) => (
@@ -56,6 +58,7 @@ const HomePage = () => {
             )}
           />
 
+          {/* total lesson count */}
           <ReactQuery
             queryResult={lessonCountQuery}
             render={(data) => (
@@ -67,6 +70,7 @@ const HomePage = () => {
             )}
           />
 
+          {/* total package count */}
           <ReactQuery
             queryResult={packageCountQuery}
             render={(data) => (
@@ -78,6 +82,7 @@ const HomePage = () => {
             )}
           />
 
+          {/* revenue sum of payment rates */}
           <ReactQuery
             queryResult={revenueSumQuery}
             render={(data) => (
