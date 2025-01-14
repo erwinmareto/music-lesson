@@ -12,3 +12,16 @@ export const getPackageCount = async () => {
 
   return response;
 };
+
+export const getTopInstruments = async () => {
+  const response = await directus.request(
+    aggregate("packages", {
+      aggregate: {
+        count: "*",
+      },
+      groupBy: ["instrument"],
+    }),
+  );
+
+  return response;
+};
