@@ -22,46 +22,62 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { useTopInstruments } from "@/queries/packages";
+import { InstrumentsConstant } from "@/lib/constants/datas";
 
 const InstrumentChart = () => {
-  const InstrumentData = [
-    { instrument: "Guitar", lessons: 20, fill: "var(--color-success)" },
-    { instrument: "Piano", lessons: 37, fill: "var(--color-danger)" },
-    { instrument: "Violin", lessons: 15, fill: "var(--color-warning)" },
-    { instrument: "Drums", lessons: 12, fill: "var(--color-info)" },
-    { instrument: "Saxophone", lessons: 10, fill: "var(--color-primary)" },
-    { instrument: "Flute", lessons: 8, fill: "var(--color-secondary)" },
-    { instrument: "Trumpet", lessons: 5, fill: "var(--color-tertiary)" },
-  ];
+  const { data: topInstrumentsData } = useTopInstruments();
+
+  // change the instrument ID to the instrument name and sort by count
+  const processedTopInstrumentData = (
+    topInstrumentsData?.map((instrument) => ({
+      ...instrument,
+      instrument:
+        InstrumentsConstant[instrument.instrument - 1] || instrument.instrument,
+      fill: `var(--color-${InstrumentsConstant[instrument.instrument - 1]})`,
+    })) || []
+  ).sort((a, b) => Number(b.count ?? 0) - Number(a.count ?? 0));
 
   const chartConfig = {
-    success: {
-      label: "Guitar",
-      color: "hsl(120, 100%, 30%)", // Darker Green
-    },
-    danger: {
+    Piano: {
       label: "Piano",
-      color: "hsl(0, 100%, 30%)", // Darker Red
+      color: "hsl(0, 70%, 40%)", // Red
     },
-    warning: {
+    Violin: {
       label: "Violin",
-      color: "hsl(60, 100%, 30%)", // Darker Yellow
+      color: "hsl(60, 70%, 40%)", // Yellow
     },
-    info: {
-      label: "Drums",
-      color: "hsl(240, 100%, 30%)", // Darker Blue
+    Cello: {
+      label: "Cello",
+      color: "hsl(210, 70%, 40%)", // Sky Blue
     },
-    primary: {
-      label: "Saxophone",
-      color: "hsl(300, 100%, 30%)", // Darker Purple
+    Guitar: {
+      label: "Guitar",
+      color: "hsl(120, 70%, 40%)", // Green
     },
-    secondary: {
-      label: "Flute",
-      color: "hsl(180, 100%, 30%)", // Darker Cyan
+    Percussion: {
+      label: "Percussion",
+      color: "hsl(240, 70%, 40%)", // Blue
     },
-    tertiary: {
+    Viola: {
+      label: "Viola",
+      color: "hsl(300, 70%, 40%)", // Purple
+    },
+    Clarinet: {
+      label: "Clarinet",
+      color: "hsl(90, 70%, 40%)", // Lime
+    },
+    Harp: {
+      label: "Harp",
+      color: "hsl(270, 70%, 40%)", // Violet
+    },
+    Trumpet: {
       label: "Trumpet",
-      color: "hsl(30, 100%, 30%)", // Darker Orange
+      color: "hsl(30, 70%, 40%)", // Orange
+    },
+    Drums: {
+      label: "Drums",
+      color: "hsl(180, 70%, 40%)", // Cyan
     },
   } satisfies ChartConfig;
 
@@ -75,7 +91,7 @@ const InstrumentChart = () => {
         <ChartContainer config={chartConfig}>
           <BarChart
             accessibilityLayer
-            data={InstrumentData}
+            data={processedTopInstrumentData}
             layout="vertical"
             margin={{
               right: 16,
@@ -88,16 +104,15 @@ const InstrumentChart = () => {
               tickLine={false}
               tickMargin={10}
               axisLine={false}
-              tickFormatter={(value) => value.slice(0, 3)}
               hide
             />
-            <XAxis dataKey="lessons" type="number" hide />
+            <XAxis dataKey="count" type="number" hide />
             <ChartTooltip
               cursor={false}
               content={<ChartTooltipContent indicator="line" />}
             />
             <Bar
-              dataKey="lessons"
+              dataKey="count"
               layout="vertical"
               fill="var(--color-desktop)"
               radius={4}
