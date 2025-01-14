@@ -12,3 +12,14 @@ export const getRevenueSum = async () => {
 
   return response;
 };
+
+export const getRevenueByMonth = async () => {
+  const response = await directus.request(
+    aggregate("payments", {
+      aggregate: { sum: ["rate"] },
+      groupBy: ["month(payment_date)"],
+    }),
+  );
+
+  return response;
+};
