@@ -53,7 +53,9 @@ const HomePage = () => {
               <OverviewCard
                 icon={<Music2 />}
                 category="instruments"
-                total={data[0].count}
+                total={parseInt(data[0].count as string).toLocaleString(
+                  "en-US",
+                )}
               />
             )}
           />
@@ -65,7 +67,9 @@ const HomePage = () => {
               <OverviewCard
                 icon={<BookAudio />}
                 category="lessons"
-                total={data[0].count}
+                total={parseInt(data[0].count as string).toLocaleString(
+                  "en-US",
+                )}
               />
             )}
           />
@@ -77,7 +81,9 @@ const HomePage = () => {
               <OverviewCard
                 icon={<Package />}
                 category="packages"
-                total={data[0].count}
+                total={parseInt(data[0].count as string).toLocaleString(
+                  "en-US",
+                )}
               />
             )}
           />
@@ -90,7 +96,7 @@ const HomePage = () => {
                 icon={<CircleDollarSign />}
                 category="revenue"
                 // @ts-expect-error - there is "rate" data inside of data[0].sum but TS is saying .sum is a string when it is an object
-                total={parseFloat(data[0].sum?.rate)}
+                total={parseFloat(data[0].sum?.rate).toLocaleString("en-US")}
               />
             )}
           />
