@@ -7,7 +7,7 @@ export const getLessonCount = async () => {
       aggregate: {
         count: "*",
       },
-    })
+    }),
   );
 
   return response;

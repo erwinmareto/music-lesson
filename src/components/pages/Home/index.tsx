@@ -1,22 +1,93 @@
+"use client";
+
 import { BookAudio, CircleDollarSign, Music2, Package } from "lucide-react";
 
 import OverviewCard from "@/components/parts/OverviewCard";
 import RevenueCharts from "@/components/parts/Charts/RevenueChart";
 import LessonChart from "@/components/parts/Charts/LessonChart";
 import InstrumentChart from "@/components/parts/Charts/InstrumentsChart";
+import { useUserCount } from "@/queries/user";
+import ReactQuery from "@/components/parts/ReactQuery";
+import { useLessonCount } from "@/queries/lessons";
+import { useInstrumentCount } from "@/queries/instruments";
+import { usePackageCount } from "@/queries/packages";
+import { useRevenueSum } from "@/queries/payments";
+import { UserCountConstant } from "@/lib/constants/datas";
+
 const HomePage = () => {
+  const userCountQuery = useUserCount();
+  const lessonCountQuery = useLessonCount();
+  const instrumentCountQuery = useInstrumentCount();
+  const packageCountQuery = usePackageCount();
+  const revenueSumQuery = useRevenueSum();
+
   return (
     <div className="flex flex-col gap-4 p-4">
       <section className="flex flex-col gap-4">
         <h1 className="font-semibold text-4xl">Overview</h1>
+
+        <div className="flex gap-4 max-sm:justify-between">
+          <ReactQuery
+            queryResult={userCountQuery}
+            render={(data) => (
+              <>
+                {UserCountConstant.map((item, index) => (
+                  <OverviewCard
+                    key={index}
+                    icon={item.icon}
+                    category={item.category}
+                    total={data?.[index].count}
+                    isUser
+                  />
+                ))}
+              </>
+            )}
+          />
+        </div>
         <div className="grid grid-cols-12 gap-4">
-          <OverviewCard icon={<Music2 />} category="instruments" total={7} />
-          <OverviewCard icon={<BookAudio />} category="lessons" total={24} />
-          <OverviewCard icon={<Package />} category="packages" total={6} />
-          <OverviewCard
-            icon={<CircleDollarSign />}
-            category="payments"
-            total={15}
+          <ReactQuery
+            queryResult={instrumentCountQuery}
+            render={(data) => (
+              <OverviewCard
+                icon={<Music2 />}
+                category="instruments"
+                total={data[0].count}
+              />
+            )}
+          />
+
+          <ReactQuery
+            queryResult={lessonCountQuery}
+            render={(data) => (
+              <OverviewCard
+                icon={<BookAudio />}
+                category="lessons"
+                total={data[0].count}
+              />
+            )}
+          />
+
+          <ReactQuery
+            queryResult={packageCountQuery}
+            render={(data) => (
+              <OverviewCard
+                icon={<Package />}
+                category="packages"
+                total={data[0].count}
+              />
+            )}
+          />
+
+          <ReactQuery
+            queryResult={revenueSumQuery}
+            render={(data) => (
+              <OverviewCard
+                icon={<CircleDollarSign />}
+                category="revenue"
+                // @ts-expect-error - there is "rate" data inside of data[0].sum but TS is saying .sum is a string when it is an object
+                total={parseFloat(data[0].sum?.rate)}
+              />
+            )}
           />
         </div>
       </section>

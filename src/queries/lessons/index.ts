@@ -13,7 +13,7 @@ export const useLessons = (page: number) => {
           fields: ["*"],
           limit: 10,
           page: page,
-        })
+        }),
       );
 
       return response;
