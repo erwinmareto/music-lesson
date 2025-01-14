@@ -37,7 +37,9 @@ const HomePage = () => {
                     key={index}
                     icon={item.icon}
                     category={item.category}
-                    total={data?.[index].count}
+                    total={parseInt(
+                      data?.[index].count as string,
+                    ).toLocaleString()}
                     isUser
                   />
                 ))}
@@ -53,9 +55,7 @@ const HomePage = () => {
               <OverviewCard
                 icon={<Music2 />}
                 category="instruments"
-                total={parseInt(data[0].count as string).toLocaleString(
-                  "en-US",
-                )}
+                total={parseInt(data[0].count as string).toLocaleString()}
               />
             )}
           />
@@ -67,9 +67,7 @@ const HomePage = () => {
               <OverviewCard
                 icon={<BookAudio />}
                 category="lessons"
-                total={parseInt(data[0].count as string).toLocaleString(
-                  "en-US",
-                )}
+                total={parseInt(data[0].count as string).toLocaleString()}
               />
             )}
           />
@@ -81,9 +79,7 @@ const HomePage = () => {
               <OverviewCard
                 icon={<Package />}
                 category="packages"
-                total={parseInt(data[0].count as string).toLocaleString(
-                  "en-US",
-                )}
+                total={parseInt(data[0].count as string).toLocaleString()}
               />
             )}
           />
@@ -96,7 +92,7 @@ const HomePage = () => {
                 icon={<CircleDollarSign />}
                 category="revenue"
                 // @ts-expect-error - there is "rate" data inside of data[0].sum but TS is saying .sum is a string when it is an object
-                total={parseFloat(data[0].sum?.rate).toLocaleString("en-US")}
+                total={parseFloat(data[0].sum?.rate).toLocaleString()}
               />
             )}
           />
