@@ -9,9 +9,9 @@ import {
   LESSON_QUERY_KEY,
 } from "@/lib/constants/queryKeys";
 
-export const useLessons = (page: number) => {
+export const useLessons = (offset: number) => {
   const result = useQuery({
-    queryKey: [LESSON_QUERY_KEY, page],
+    queryKey: [LESSON_QUERY_KEY, offset],
     queryFn: async () => {
       const response = await directus.request(
         readItems("lessons", {
@@ -23,8 +23,14 @@ export const useLessons = (page: number) => {
             "teacher.first_name",
             "teacher.last_name",
           ],
-          limit: 10,
-          page: page,
+          // limit: DATA_LIMIT,
+          // page: page,
+          offset: offset,
+          // filter: {
+          //   status: {
+          //     _eq: "attended",
+          //   },
+          // },
         }),
       );
 

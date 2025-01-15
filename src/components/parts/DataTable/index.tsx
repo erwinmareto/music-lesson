@@ -2,8 +2,11 @@
 
 import {
   ColumnDef,
+  ColumnFiltersState,
   flexRender,
   getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
 
@@ -17,36 +20,71 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { MouseEventHandler } from "react";
+import { useState, useEffect } from "react";
+import { Input } from "@/components/ui/input";
+import { DATA_LIMIT } from "@/lib/constants/datas";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   totalPages: number;
-  currentPage: number;
-  nextPageHandler: MouseEventHandler<HTMLButtonElement>;
-  prevPageHandler: MouseEventHandler<HTMLButtonElement>;
+  offset: number;
   hasMorePage: boolean;
+  handleCurrentPage: (page: number) => void;
 }
 
 export default function DataTable<TData, TValue>({
   columns,
   data,
   totalPages,
-  currentPage,
-  prevPageHandler,
-  nextPageHandler,
+  offset,
   hasMorePage,
+  handleCurrentPage,
 }: DataTableProps<TData, TValue>) {
+  const [pagination, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: DATA_LIMIT,
+  });
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    onPaginationChange: setPagination,
+    onColumnFiltersChange: setColumnFilters,
+    getFilteredRowModel: getFilteredRowModel(),
+    state: {
+      pagination,
+      columnFilters,
+    },
   });
+
+  useEffect(() => {
+    // reset page index every 11th page because we are only getting 10 pages worth of datas at a time
+    if (pagination.pageIndex === 10) {
+      setPagination((prev) => ({ ...prev, pageIndex: 0 }));
+    }
+  }, [pagination.pageIndex]);
 
   return (
     <>
       <div className="rounded-md border">
+        <div className="flex items-center py-4">
+          <Input
+            placeholder="Filter package..."
+            value={
+              (table.getColumn("package_name")?.getFilterValue() as string) ??
+              ""
+            }
+            onChange={(event) =>
+              table
+                .getColumn("package_name")
+                ?.setFilterValue(event.target.value)
+            }
+            className="max-w-sm"
+          />
+        </div>
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -97,13 +135,13 @@ export default function DataTable<TData, TValue>({
         </Table>
       </div>
       <div className="flex items-center justify-end gap-8">
-        <p className="max-md:hidden">{`Page ${currentPage + 1} of ${totalPages}`}</p>
+        <p className="max-md:hidden">{`Page ${pagination.pageIndex + 1 + offset / 10} of ${totalPages}`}</p>
         <div className="flex items-center justify-end gap-2">
           <Button
             variant="secondary"
             size="sm"
-            onClick={prevPageHandler}
-            disabled={currentPage <= 0}
+            onClick={() => table.previousPage()}
+            disabled={!table.getCanPreviousPage()}
             className="bg-primary-0 border"
           >
             <ChevronLeft />
@@ -111,7 +149,10 @@ export default function DataTable<TData, TValue>({
           <Button
             variant="secondary"
             size="sm"
-            onClick={nextPageHandler}
+            onClick={() => {
+              table.nextPage();
+              handleCurrentPage(pagination.pageIndex);
+            }}
             disabled={!hasMorePage}
             className="bg-primary-0 border"
           >
