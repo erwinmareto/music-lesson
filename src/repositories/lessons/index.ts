@@ -12,3 +12,16 @@ export const getLessonCount = async () => {
 
   return response;
 };
+
+export const getLessonByStatusCount = async () => {
+  const response = await directus.request(
+    aggregate("lessons", {
+      aggregate: {
+        count: "*",
+      },
+      groupBy: ["status"],
+    }),
+  );
+
+  return response;
+};

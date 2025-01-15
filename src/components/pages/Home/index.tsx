@@ -27,6 +27,7 @@ const HomePage = () => {
         <h1 className="font-semibold text-4xl">Overview</h1>
 
         <div className="flex gap-4 max-sm:justify-between">
+          {/* student and teacher count */}
           <ReactQuery
             queryResult={userCountQuery}
             render={(data) => (
@@ -36,7 +37,9 @@ const HomePage = () => {
                     key={index}
                     icon={item.icon}
                     category={item.category}
-                    total={data?.[index].count}
+                    total={parseInt(
+                      data?.[index].count as string,
+                    ).toLocaleString()}
                     isUser
                   />
                 ))}
@@ -45,39 +48,43 @@ const HomePage = () => {
           />
         </div>
         <div className="grid grid-cols-12 gap-4">
+          {/* total instrument count */}
           <ReactQuery
             queryResult={instrumentCountQuery}
             render={(data) => (
               <OverviewCard
                 icon={<Music2 />}
                 category="instruments"
-                total={data[0].count}
+                total={parseInt(data[0].count as string).toLocaleString()}
               />
             )}
           />
 
+          {/* total lesson count */}
           <ReactQuery
             queryResult={lessonCountQuery}
             render={(data) => (
               <OverviewCard
                 icon={<BookAudio />}
                 category="lessons"
-                total={data[0].count}
+                total={parseInt(data[0].count as string).toLocaleString()}
               />
             )}
           />
 
+          {/* total package count */}
           <ReactQuery
             queryResult={packageCountQuery}
             render={(data) => (
               <OverviewCard
                 icon={<Package />}
                 category="packages"
-                total={data[0].count}
+                total={parseInt(data[0].count as string).toLocaleString()}
               />
             )}
           />
 
+          {/* revenue sum of payment rates */}
           <ReactQuery
             queryResult={revenueSumQuery}
             render={(data) => (
@@ -85,7 +92,7 @@ const HomePage = () => {
                 icon={<CircleDollarSign />}
                 category="revenue"
                 // @ts-expect-error - there is "rate" data inside of data[0].sum but TS is saying .sum is a string when it is an object
-                total={parseFloat(data[0].sum?.rate)}
+                total={parseFloat(data[0].sum?.rate).toLocaleString()}
               />
             )}
           />

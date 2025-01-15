@@ -15,19 +15,21 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useRevenueByMonth } from "@/queries/payments";
+import { MONTHS } from "@/lib/constants/datas";
 
 const RevenueCharts = () => {
-  const revenueData = [
-    { month: "Jan", revenue: 10 },
-    { month: "Feb", revenue: 30 },
-    { month: "Mar", revenue: 20 },
-    { month: "Apr", revenue: 50 },
-  ];
+  const { data: revenueByMonthData } = useRevenueByMonth();
+
+  const processedData = revenueByMonthData?.map((item) => ({
+    month: MONTHS[item.payment_date_month - 1],
+    revenue: item.sum.rate,
+  }));
 
   const chartConfig = {
-    desktop: {
-      label: "Desktop",
-      color: "hsl(var(--chart-1))",
+    revenue: {
+      label: "Revenue",
+      color: "hsl(var(--chart-2))",
     },
   } satisfies ChartConfig;
 
@@ -44,7 +46,7 @@ const RevenueCharts = () => {
         <ChartContainer config={chartConfig}>
           <AreaChart
             accessibilityLayer
-            data={revenueData}
+            data={processedData}
             margin={{
               left: 12,
               right: 12,
@@ -65,9 +67,9 @@ const RevenueCharts = () => {
             <Area
               dataKey="revenue"
               type="natural"
-              fill="var(--color-desktop)"
+              fill="var(--color-revenue)"
               fillOpacity={0.4}
-              stroke="var(--color-desktop)"
+              stroke="var(--color-revenue)"
               strokeWidth={4}
             />
           </AreaChart>
