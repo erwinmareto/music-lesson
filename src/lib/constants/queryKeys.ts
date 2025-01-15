@@ -2,6 +2,8 @@ export const INSTRUMENT_COUNT_QUERY_KEY = "instrumentCount";
 
 export const TOP_INSTRUMENTS_QUERY_KEY = "topInstrument";
 
+export const LESSON_QUERY_KEY = "lessons";
+
 export const LESSON_COUNT_QUERY_KEY = "lessonsCount";
 
 export const LESSON_COUNT_GROUP_QUERY_KEY = "lessonsGroupCount";

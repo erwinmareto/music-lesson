@@ -6,15 +6,23 @@ import { getLessonByStatusCount, getLessonCount } from "@/repositories/lessons";
 import {
   LESSON_COUNT_GROUP_QUERY_KEY,
   LESSON_COUNT_QUERY_KEY,
+  LESSON_QUERY_KEY,
 } from "@/lib/constants/queryKeys";
 
 export const useLessons = (page: number) => {
   const result = useQuery({
-    queryKey: ["lessons", page],
+    queryKey: [LESSON_QUERY_KEY, page],
     queryFn: async () => {
       const response = await directus.request(
         readItems("lessons", {
-          fields: ["*"],
+          fields: [
+            "id",
+            "status",
+            "start_datetime",
+            "package.name",
+            "teacher.first_name",
+            "teacher.last_name",
+          ],
           limit: 10,
           page: page,
         }),
