@@ -32,3 +32,5 @@ export const MONTHS = [
   "November",
   "December",
 ];
+
+export const DATA_LIMIT = 10;

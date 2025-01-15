@@ -38,7 +38,7 @@ const HomePage = () => {
                     icon={item.icon}
                     category={item.category}
                     total={parseInt(
-                      data?.[index].count as string
+                      data?.[index].count as string,
                     ).toLocaleString()}
                     isUser
                   />
