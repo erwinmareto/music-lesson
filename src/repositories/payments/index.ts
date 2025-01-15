@@ -17,7 +17,7 @@ export const getRevenueByMonth = async () => {
   const response = await directus.request(
     aggregate("payments", {
       aggregate: { sum: ["rate"] },
-      groupBy: ["month(payment_date)"],
+      groupBy: ["month(payment_date)", "year(payment_date)"],
     }),
   );
 

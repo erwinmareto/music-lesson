@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@directus/sdk": "^18.0.3",
+    "@radix-ui/react-select": "^2.1.4",
     "@tanstack/react-query": "^5.64.0",
     "@tanstack/react-query-devtools": "^5.64.0",
     "@tanstack/react-table": "^8.20.6",
