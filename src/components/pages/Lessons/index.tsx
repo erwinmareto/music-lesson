@@ -31,8 +31,8 @@ const LessonsPage = () => {
   }, [currentPage]);
 
   return (
-    <div className="container mx-auto p-10">
-      <Card className="p-4">
+    <div className="container mx-auto p-2 md:p-10">
+      <Card className="p-2 md:p-4">
         <ReactQuery
           queryResult={lessonsQuery}
           render={(data) => (
