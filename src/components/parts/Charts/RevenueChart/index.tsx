@@ -80,6 +80,31 @@ const RevenueCharts = () => {
                   </SelectContent>
                 </Select>
               </div>
+
+              <div className="flex items-center space-x-4">
+                <div>
+                  <p className="max-sm:text-sm">Highest Revenue: </p>
+                  <p className="font-semibold text-2xl">
+                    {/* get the highest revenue */}
+                    {Math.max(
+                      ...processedData.map((item) =>
+                        parseInt(item.revenue as string),
+                      ),
+                    )}
+                  </p>
+                </div>
+                <div>
+                  <p className="max-sm:text-sm">Lowest Revenue: </p>
+                  <p className="font-semibold text-2xl">
+                    {/* get the lowest revenue */}
+                    {Math.min(
+                      ...processedData.map((item) =>
+                        parseInt(item.revenue as string),
+                      ),
+                    )}
+                  </p>
+                </div>
+              </div>
             </div>
           )}
         </div>
