@@ -10,7 +10,7 @@ export const getLessonCount = async () => {
     }),
   );
 
-  return response;
+  return response[0].count;
 };
 
 export const getLessonByStatusCount = async () => {
