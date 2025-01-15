@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import DataTable from "@/components/parts/DataTable";
 import { columns } from "@/components/parts/DataTable/columns";
@@ -10,25 +10,28 @@ import { Card } from "@/components/ui/card";
 import { DATA_LIMIT } from "@/lib/constants/datas";
 
 const LessonsPage = () => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [currentOffset, setCurrentOffset] = useState(0);
-  const lessonsQuery = useLessons(currentOffset);
+  const [currentPage, setCurrentPage] = useState(0);
+  const lessonsQuery = useLessons(currentPage);
   const { data: lessonCountData } = useLessonCount();
 
   const handleCurrentPage = (page: number) => {
     setCurrentPage(page);
   };
 
-  const totalPages = Math.ceil(parseInt(lessonCountData || "0") / DATA_LIMIT);
-
-  const hasMorePage = totalPages - currentOffset <= totalPages; // check if offset is bigger than page total
-
-  useEffect(() => {
-    // refetch the data every 10th page (fetch 100 data at a time with offset)
-    if (currentPage === 9) {
-      setCurrentOffset((prevOffset) => prevOffset + 100);
+  const handleNextPage = () => {
+    if (hasMorePage) {
+      setCurrentPage((prevPage) => prevPage + 1);
     }
-  }, [currentPage]);
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 0) {
+      setCurrentPage((prevPage) => prevPage - 1);
+    }
+  };
+
+  const totalPages = Math.ceil(parseInt(lessonCountData || "0") / DATA_LIMIT);
+  const hasMorePage = DATA_LIMIT * currentPage < totalPages;
 
   return (
     <div className="container mx-auto p-2 md:p-10">
@@ -40,9 +43,10 @@ const LessonsPage = () => {
               columns={columns}
               data={data}
               currentPage={currentPage}
-              handleCurrentPage={handleCurrentPage}
+              pageHandler={handleCurrentPage}
+              prevPageHandler={handlePreviousPage}
+              nextPageHandler={handleNextPage}
               hasMorePage={hasMorePage}
-              offset={currentOffset}
               totalPages={totalPages}
             />
           )}
