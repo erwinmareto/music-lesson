@@ -25,21 +25,22 @@ export const columns: ColumnDef<LessonData>[] = [
     accessorKey: "package.name",
     header: "Package Name",
   },
-  {
-    accessorKey: "start_datetime",
-    header: "Start Date & Time",
-    cell: ({ row }) => {
-      const parsedDate = parseISO(row.getValue<string>("start_datetime"));
-      const formattedDate = format(parsedDate, "MMM d, yyyy");
-      return <p>{formattedDate}</p>;
-    },
-  },
+
   {
     accessorKey: "status",
     header: "Status",
   },
   {
     accessorKey: "teacher.first_name",
-    header: "Teacher First Name",
+    header: "Teacher",
+  },
+  {
+    accessorKey: "start_datetime",
+    header: "Start Date",
+    cell: ({ row }) => {
+      const parsedDate = parseISO(row.getValue<string>("start_datetime"));
+      const formattedDate = format(parsedDate, "MMM d, yyyy");
+      return <p>{formattedDate}</p>;
+    },
   },
 ];
