@@ -1,35 +1,25 @@
 import { useQuery } from "@tanstack/react-query";
 
-import directus from "@/lib/directus";
-import { readItems } from "@directus/sdk";
-import { getLessonByStatusCount, getLessonCount } from "@/repositories/lessons";
+import {
+  getLessonByStatusCount,
+  getLessonCount,
+  getLessons,
+} from "@/repositories/lessons";
 import {
   LESSON_COUNT_GROUP_QUERY_KEY,
   LESSON_COUNT_QUERY_KEY,
   LESSON_QUERY_KEY,
 } from "@/lib/constants/queryKeys";
+import { Filters, getFilters, getFiltersQueryKeys } from "@/lib/filter";
 
-export const useLessons = (page: number) => {
+export const useLessons = (page: number, filters: Filters[]) => {
+  const lessonFilters = getFilters(filters);
+
+  const filtersQueryKeys = getFiltersQueryKeys(filters);
+
   const result = useQuery({
-    queryKey: [LESSON_QUERY_KEY, page],
-    queryFn: async () => {
-      const response = await directus.request(
-        readItems("lessons", {
-          fields: [
-            "id",
-            "status",
-            "start_datetime",
-            "package.name",
-            "teacher.first_name",
-            "teacher.last_name",
-          ],
-          limit: 10,
-          page: page,
-        }),
-      );
-
-      return response;
-    },
+    queryKey: [LESSON_QUERY_KEY, page, ...filtersQueryKeys],
+    queryFn: () => getLessons(page, lessonFilters),
   });
 
   return result;
