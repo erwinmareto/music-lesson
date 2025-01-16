@@ -8,16 +8,16 @@ const RightMenu = () => {
           <Link href="/">Home</Link>
         </li>
         <li>
-          <Link href="/">Instruments</Link>
+          <Link href="/instruments">Instruments</Link>
         </li>
         <li>
-          <Link href="/">Lessons</Link>
+          <Link href="/lessons">Lessons</Link>
         </li>
         <li>
-          <Link href="/">Packages</Link>
+          <Link href="/packages">Packages</Link>
         </li>
         <li>
-          <Link href="/">Payments</Link>
+          <Link href="/payments">Payments</Link>
         </li>
       </ul>
     </nav>

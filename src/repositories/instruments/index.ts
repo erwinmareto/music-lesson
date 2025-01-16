@@ -1,14 +1,33 @@
 import directus from "@/lib/directus";
-import { aggregate } from "@directus/sdk";
+import { aggregate, readItems } from "@directus/sdk";
 
-export const getInstrumentCount = async () => {
+export const getInstrumentCount = async (filter?: Record<string, unknown>) => {
   const response = await directus.request(
     aggregate("instruments", {
       aggregate: {
         count: "*",
       },
+      query: {
+        filter: filter,
+      },
     }),
   );
 
   return response[0].count;
+};
+
+export const getInstruments = async (
+  page: number,
+  filter: Record<string, unknown>,
+) => {
+  const response = await directus.request(
+    readItems("instruments", {
+      fields: ["id", "name", "count(students)", "count(teachers)"],
+      limit: 10,
+      page: page,
+      filter: filter,
+    }),
+  );
+
+  return response;
 };
