@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import DataTable from "@/components/parts/DataTable";
 import { columns } from "@/components/parts/DataTable/columns";
@@ -27,13 +27,14 @@ const LessonsPage = () => {
   const searchParams = useSearchParams();
   const [status, setStatus] = useState("");
   const [teacher, setTeacher] = useState("");
+
   const lessonFilters: Filters[] = [
     { field: "status", query: searchParams.get("status") },
     { field: ["teacher", "first_name"], query: searchParams.get("teacher") },
   ];
   const [currentPage, setCurrentPage] = useState(0);
   const lessonsQuery = useLessons(currentPage, lessonFilters);
-  const { data: lessonCountData } = useLessonCount();
+  const { data: lessonCountData } = useLessonCount(lessonFilters);
 
   const handleCurrentPage = (page: number) => {
     setCurrentPage(page);
@@ -60,7 +61,7 @@ const LessonsPage = () => {
   };
 
   const totalPages = Math.ceil(parseInt(lessonCountData || "0") / DATA_LIMIT);
-  const hasMorePage = DATA_LIMIT * currentPage < totalPages;
+  const hasMorePage = currentPage <= totalPages - 1; // reduce page total by 1 because current page start from 0
 
   useDebounce(
     () => {
@@ -89,6 +90,10 @@ const LessonsPage = () => {
     300,
     [status, teacher],
   );
+
+  useEffect(() => {
+    setCurrentPage(0); // reset page to 0 when filters applied
+  }, [searchParams]);
 
   return (
     <div className="container mx-auto p-2 md:p-10">
