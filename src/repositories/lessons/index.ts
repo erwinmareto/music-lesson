@@ -3,7 +3,7 @@ import directus from "@/lib/directus";
 
 export const getLessons = async (
   page: number,
-  filter: Record<string, unknown>,
+  filter: Record<string, unknown>
 ) => {
   const response = await directus.request(
     readItems("lessons", {
@@ -18,33 +18,22 @@ export const getLessons = async (
       limit: 10,
       page: page,
       filter: filter,
-    }),
+    })
   );
 
   return response;
 };
 
-export const getLessonCount = async () => {
+export const getLessonCount = async (filter?: Record<string, unknown>) => {
   const response = await directus.request(
     aggregate("lessons", {
       aggregate: {
         count: "*",
       },
-      // query: {
-      // filter: {
-      //   status: {
-      //     _eq: "attended",
-      //   },
-      // },
-      // filter: {
-      //   teacher: {
-      //     first_name: {
-      //       _eq: "Montana",
-      //     },
-      //   },
-      // },
-      // },
-    }),
+      query: {
+        filter: filter,
+      },
+    })
   );
 
   return response[0].count;
@@ -57,7 +46,7 @@ export const getLessonByStatusCount = async () => {
         count: "*",
       },
       groupBy: ["status"],
-    }),
+    })
   );
 
   return response;

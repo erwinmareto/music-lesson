@@ -25,10 +25,14 @@ export const useLessons = (page: number, filters: Filters[]) => {
   return result;
 };
 
-export const useLessonCount = () => {
+export const useLessonCount = (filters?: Filters[]) => {
+  const lessonCountFilters = filters ? getFilters(filters) : {};
+
+  const filtersQueryKeys = filters ? getFiltersQueryKeys(filters) : [];
+
   const result = useQuery({
-    queryKey: [LESSON_COUNT_QUERY_KEY],
-    queryFn: getLessonCount,
+    queryKey: [LESSON_COUNT_QUERY_KEY, ...filtersQueryKeys],
+    queryFn: () => getLessonCount(lessonCountFilters),
   });
 
   return result;
