@@ -1,36 +1,38 @@
 import { useQuery } from "@tanstack/react-query";
 
-import directus from "@/lib/directus";
-import { readItems } from "@directus/sdk";
-import { getLessonByStatusCount, getLessonCount } from "@/repositories/lessons";
+import {
+  getLessonByStatusCount,
+  getLessonCount,
+  getLessons,
+} from "@/repositories/lessons";
 import {
   LESSON_COUNT_GROUP_QUERY_KEY,
   LESSON_COUNT_QUERY_KEY,
+  LESSON_QUERY_KEY,
 } from "@/lib/constants/queryKeys";
+import { Filters, getFilters, getFiltersQueryKeys } from "@/lib/filter";
 
-export const useLessons = (page: number) => {
+export const useLessons = (page: number, filters: Filters[]) => {
+  const lessonFilters = getFilters(filters);
+
+  const filtersQueryKeys = getFiltersQueryKeys(filters);
+
   const result = useQuery({
-    queryKey: ["lessons", page],
-    queryFn: async () => {
-      const response = await directus.request(
-        readItems("lessons", {
-          fields: ["*"],
-          limit: 10,
-          page: page,
-        }),
-      );
-
-      return response;
-    },
+    queryKey: [LESSON_QUERY_KEY, page, ...filtersQueryKeys],
+    queryFn: () => getLessons(page, lessonFilters),
   });
 
   return result;
 };
 
-export const useLessonCount = () => {
+export const useLessonCount = (filters?: Filters[]) => {
+  const lessonCountFilters = filters ? getFilters(filters) : {};
+
+  const filtersQueryKeys = filters ? getFiltersQueryKeys(filters) : [];
+
   const result = useQuery({
-    queryKey: [LESSON_COUNT_QUERY_KEY],
-    queryFn: getLessonCount,
+    queryKey: [LESSON_COUNT_QUERY_KEY, ...filtersQueryKeys],
+    queryFn: () => getLessonCount(lessonCountFilters),
   });
 
   return result;

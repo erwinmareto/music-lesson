@@ -10,5 +10,5 @@ export const getInstrumentCount = async () => {
     }),
   );
 
-  return response;
+  return response[0].count;
 };

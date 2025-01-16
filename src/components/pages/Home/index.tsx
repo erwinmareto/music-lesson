@@ -55,7 +55,7 @@ const HomePage = () => {
               <OverviewCard
                 icon={<Music2 />}
                 category="instruments"
-                total={parseInt(data[0].count as string).toLocaleString()}
+                total={parseInt(data as string).toLocaleString()}
               />
             )}
           />
@@ -67,7 +67,7 @@ const HomePage = () => {
               <OverviewCard
                 icon={<BookAudio />}
                 category="lessons"
-                total={parseInt(data[0].count as string).toLocaleString()}
+                total={parseInt(data as string).toLocaleString()}
               />
             )}
           />
@@ -79,7 +79,7 @@ const HomePage = () => {
               <OverviewCard
                 icon={<Package />}
                 category="packages"
-                total={parseInt(data[0].count as string).toLocaleString()}
+                total={parseInt(data as string).toLocaleString()}
               />
             )}
           />

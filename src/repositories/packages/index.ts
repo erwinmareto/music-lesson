@@ -10,7 +10,7 @@ export const getPackageCount = async () => {
     }),
   );
 
-  return response;
+  return response[0].count;
 };
 
 export const getTopInstruments = async () => {
