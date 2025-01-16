@@ -3,6 +3,17 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { format, parseISO } from "date-fns";
 
+export interface InstrumentsData {
+  id: number;
+  name: string;
+  student: {
+    students_id: string;
+  };
+  teacher: {
+    teachers_id: string;
+  };
+}
+
 export interface LessonData {
   id: number;
   package: {
@@ -42,5 +53,24 @@ export const columns: ColumnDef<LessonData>[] = [
       const formattedDate = format(parsedDate, "MMM d, yyyy");
       return <p>{formattedDate}</p>;
     },
+  },
+];
+
+export const instrumentsColumns: ColumnDef<InstrumentsData>[] = [
+  {
+    accessorKey: "id",
+    header: "ID",
+  },
+  {
+    accessorKey: "name",
+    header: "Name",
+  },
+  {
+    accessorKey: "students_count",
+    header: "Student Count",
+  },
+  {
+    accessorKey: "teachers_count",
+    header: "Teacher Count",
   },
 ];

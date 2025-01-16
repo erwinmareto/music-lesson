@@ -97,7 +97,7 @@ export default function DataTable<TData, TValue>({
         </Table>
       </div>
       <div className="flex items-center justify-end gap-8">
-        <p className="max-md:hidden">{`Page ${currentPage + 1} of ${totalPages + 1}`}</p>
+        <p className="max-md:hidden">{`Page ${currentPage + 1} of ${totalPages}`}</p>
         <div className="flex items-center justify-end gap-2">
           <Button
             variant="secondary"
