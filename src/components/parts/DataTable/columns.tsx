@@ -27,7 +27,7 @@ export interface LessonData {
   };
 }
 
-export const columns: ColumnDef<LessonData>[] = [
+export const lessonsColumns: ColumnDef<LessonData>[] = [
   {
     accessorKey: "id",
     header: "ID",

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 import DataTable from "@/components/parts/DataTable";
-import { columns } from "@/components/parts/DataTable/columns";
+import { lessonsColumns } from "@/components/parts/DataTable/columns";
 import { useLessonCount, useLessons } from "@/queries/lessons";
 import ReactQuery from "@/components/parts/ReactQuery";
 import { Card } from "@/components/ui/card";
@@ -35,10 +35,6 @@ const LessonsPage = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const lessonsQuery = useLessons(currentPage, lessonFilters);
   const { data: lessonCountData } = useLessonCount(lessonFilters);
-
-  const handleCurrentPage = (page: number) => {
-    setCurrentPage(page);
-  };
 
   const handleStatus = (status: string) => {
     setStatus(status);
@@ -129,10 +125,9 @@ const LessonsPage = () => {
           render={(data) => (
             <DataTable
               // @ts-expect-error the type is already correct (what is written down in the docs) but it is still complaining
-              columns={columns}
+              columns={lessonsColumns}
               data={data}
               currentPage={currentPage}
-              pageHandler={handleCurrentPage}
               prevPageHandler={handlePreviousPage}
               nextPageHandler={handleNextPage}
               hasMorePage={hasMorePage}
