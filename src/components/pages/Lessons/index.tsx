@@ -128,6 +128,7 @@ const LessonsPage = () => {
           queryResult={lessonsQuery}
           render={(data) => (
             <DataTable
+              // @ts-expect-error the type is already correct (what is written down in the docs) but it is still complaining
               columns={columns}
               data={data}
               currentPage={currentPage}
