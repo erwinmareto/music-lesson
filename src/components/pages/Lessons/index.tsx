@@ -21,12 +21,23 @@ import {
 } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import { Filters } from "@/lib/filter";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { CalendarIcon } from "lucide-react";
+import { format } from "date-fns";
+import { Calendar } from "@/components/ui/calendar";
 
 const LessonsPage = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [status, setStatus] = useState("");
   const [teacher, setTeacher] = useState("");
+  const [startTime, setStartTime] = useState<Date>();
 
   const lessonFilters: Filters[] = [
     { field: "status", query: searchParams.get("status"), dataType: "search" },
@@ -34,6 +45,11 @@ const LessonsPage = () => {
       field: ["teacher", "first_name"],
       query: searchParams.get("teacher"),
       dataType: "search",
+    },
+    {
+      field: "start_datetime",
+      query: searchParams.get("start"),
+      dataType: "date",
     },
   ];
   const [currentPage, setCurrentPage] = useState(0);
@@ -68,6 +84,7 @@ const LessonsPage = () => {
       const newParamsRemoved = removeSearchParams(searchParams, [
         "status",
         "teacher",
+        "start",
       ]);
 
       const paramsObject: Record<string, string> = {};
@@ -80,6 +97,10 @@ const LessonsPage = () => {
         paramsObject.status = status;
       }
 
+      if (startTime) {
+        paramsObject.start = startTime.toISOString().split("T")[0];
+      }
+
       const newSearchParams = combineSearchParams(
         newParamsRemoved,
         paramsObject,
@@ -88,7 +109,7 @@ const LessonsPage = () => {
       router.push(`?${newSearchParams.toString()}`);
     },
     300,
-    [status, teacher],
+    [status, teacher, startTime],
   );
 
   useEffect(() => {
@@ -122,6 +143,35 @@ const LessonsPage = () => {
                 <SelectItem value="attended">Attended</SelectItem>
               </SelectContent>
             </Select>
+          </div>
+          <div className="flex flex-col gap-2">
+            <Label>Start Date:</Label>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant={"outline"}
+                  className={cn(
+                    "w-[280px] justify-start text-left font-normal",
+                    !startTime && "text-muted-foreground",
+                  )}
+                >
+                  <CalendarIcon />
+                  {startTime ? (
+                    format(startTime, "PPP")
+                  ) : (
+                    <span>Pick a date</span>
+                  )}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0">
+                <Calendar
+                  mode="single"
+                  selected={startTime}
+                  onSelect={setStartTime}
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
           </div>
         </div>
         <ReactQuery
