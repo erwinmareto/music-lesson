@@ -12,7 +12,7 @@ const OverviewCard = ({ icon, category, total, isUser }: OverviewCardProps) => {
           : "grid col-span-12 items-end gap-2 p-4 md:col-span-6 lg:col-span-3 max-sm:flex",
       )}
     >
-      <div className="w-10 h-10 flex justify-center items-center bg-slate-200 rounded-lg">
+      <div className="w-10 h-10 flex justify-center items-center bg-purple-200 rounded-lg">
         {icon}
       </div>
       <h2 className="text-3xl font-semibold md:text-4xl">{total}</h2>
