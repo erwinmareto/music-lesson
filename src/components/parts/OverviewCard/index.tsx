@@ -15,8 +15,8 @@ const OverviewCard = ({ icon, category, total, isUser }: OverviewCardProps) => {
       <div className="w-10 h-10 flex justify-center items-center bg-slate-200 rounded-lg">
         {icon}
       </div>
-      <h2 className="text-4xl font-semibold">{total}</h2>
-      <Link href={`/${category}`} className="text-xl capitalize">
+      <h2 className="text-3xl font-semibold md:text-4xl">{total}</h2>
+      <Link href={`/${category}`} className="text-lg capitalize md:text-xl">
         {category}
       </Link>
     </Card>
