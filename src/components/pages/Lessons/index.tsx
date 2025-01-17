@@ -29,8 +29,12 @@ const LessonsPage = () => {
   const [teacher, setTeacher] = useState("");
 
   const lessonFilters: Filters[] = [
-    { field: "status", query: searchParams.get("status") },
-    { field: ["teacher", "first_name"], query: searchParams.get("teacher") },
+    { field: "status", query: searchParams.get("status"), dataType: "search" },
+    {
+      field: ["teacher", "first_name"],
+      query: searchParams.get("teacher"),
+      dataType: "search",
+    },
   ];
   const [currentPage, setCurrentPage] = useState(0);
   const lessonsQuery = useLessons(currentPage, lessonFilters);
@@ -94,7 +98,7 @@ const LessonsPage = () => {
   return (
     <div className="container mx-auto p-2 md:p-10">
       <Card className="p-2 md:p-4">
-        <div className="flex items-center gap-4 py-4">
+        <div className="flex flex-wrap items-center gap-4 py-4">
           <div className="flex flex-col">
             <div className="space-y-1">
               <Label htmlFor="teacher">Teacher:</Label>

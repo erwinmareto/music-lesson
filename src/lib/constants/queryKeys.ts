@@ -10,7 +10,13 @@ export const LESSON_COUNT_QUERY_KEY = "lessonsCount";
 
 export const LESSON_COUNT_GROUP_QUERY_KEY = "lessonsGroupCount";
 
+export const PACKAGE_QUERY_KEY = "package";
+
 export const PACKAGE_COUNT_QUERY_KEY = "packageCount";
+
+export const PAYMENT_QUERY_KEY = "payment";
+
+export const PAYMENT_COUNT_QUERY_KEY = "paymentCount";
 
 export const REVENUE_SUM_QUERY_KEY = "revenueSum";
 

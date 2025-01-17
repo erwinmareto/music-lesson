@@ -1,12 +1,26 @@
 export interface Filters {
   field: string | string[];
   query: string | null;
+  dataType: "search" | "number" | "date";
 }
 
 export const getFilters = (filters: Filters[]) => {
   const processedFilters = filters.reduce(
-    (acc: Record<string, unknown>, { field, query }) => {
+    (acc: Record<string, unknown>, { field, query, dataType }) => {
       if (!query) return acc; // Skip if query is empty
+
+      let condition;
+      switch (dataType) {
+        case "search":
+          condition = { _icontains: query };
+          break;
+        case "number":
+        case "date":
+          condition = { _gte: query };
+          break;
+        default:
+          condition = { _icontains: query };
+      }
 
       if (Array.isArray(field)) {
         field.reduce(
@@ -16,7 +30,7 @@ export const getFilters = (filters: Filters[]) => {
             index,
           ): Record<string, unknown> => {
             if (index === field.length - 1) {
-              nestedAcc[key] = { _istarts_with: query };
+              nestedAcc[key] = condition;
             } else {
               nestedAcc[key] = nestedAcc[key] || {};
             }
@@ -25,7 +39,7 @@ export const getFilters = (filters: Filters[]) => {
           acc,
         );
       } else {
-        acc[field] = { _istarts_with: query };
+        acc[field] = condition;
       }
       return acc;
     },
