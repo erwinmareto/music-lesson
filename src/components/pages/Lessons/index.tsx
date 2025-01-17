@@ -37,7 +37,7 @@ const LessonsPage = () => {
   const searchParams = useSearchParams();
   const [status, setStatus] = useState("");
   const [teacher, setTeacher] = useState("");
-  const [startTime, setStartTime] = useState<Date>();
+  const [startDate, setStartDate] = useState<Date>();
 
   const lessonFilters: Filters[] = [
     { field: "status", query: searchParams.get("status"), dataType: "search" },
@@ -97,8 +97,8 @@ const LessonsPage = () => {
         paramsObject.status = status;
       }
 
-      if (startTime) {
-        paramsObject.start = startTime.toISOString().split("T")[0];
+      if (startDate) {
+        paramsObject.start = startDate.toISOString().split("T")[0];
       }
 
       const newSearchParams = combineSearchParams(
@@ -109,7 +109,7 @@ const LessonsPage = () => {
       router.push(`?${newSearchParams.toString()}`);
     },
     300,
-    [status, teacher, startTime],
+    [status, teacher, startDate],
   );
 
   useEffect(() => {
@@ -152,12 +152,12 @@ const LessonsPage = () => {
                   variant={"outline"}
                   className={cn(
                     "w-[280px] justify-start text-left font-normal",
-                    !startTime && "text-muted-foreground",
+                    !startDate && "text-muted-foreground",
                   )}
                 >
                   <CalendarIcon />
-                  {startTime ? (
-                    format(startTime, "PPP")
+                  {startDate ? (
+                    format(startDate, "PPP")
                   ) : (
                     <span>Pick a date</span>
                   )}
@@ -166,8 +166,8 @@ const LessonsPage = () => {
               <PopoverContent className="w-auto p-0">
                 <Calendar
                   mode="single"
-                  selected={startTime}
-                  onSelect={setStartTime}
+                  selected={startDate}
+                  onSelect={setStartDate}
                   initialFocus
                 />
               </PopoverContent>

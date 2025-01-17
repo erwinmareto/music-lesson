@@ -30,8 +30,8 @@ const PackagesPage = () => {
   const [packageName, setPackageName] = useState("");
   const [instrument, setInstrument] = useState("");
   const [student, setStudent] = useState("");
-  const [startTime, setStartTime] = useState<Date>();
-  const [endTime, setEndTime] = useState<Date>();
+  const [startDate, setStartDate] = useState<Date>();
+  const [endDate, setEndDate] = useState<Date>();
 
   const lessonFilters: Filters[] = [
     {
@@ -112,12 +112,12 @@ const PackagesPage = () => {
         paramsObject.student = student;
       }
 
-      if (startTime) {
-        paramsObject.start = startTime.toISOString().split("T")[0];
+      if (startDate) {
+        paramsObject.start = startDate.toISOString().split("T")[0];
       }
 
-      if (endTime) {
-        paramsObject.end = endTime.toISOString().split("T")[0];
+      if (endDate) {
+        paramsObject.end = endDate.toISOString().split("T")[0];
       }
 
       const newSearchParams = combineSearchParams(
@@ -128,7 +128,7 @@ const PackagesPage = () => {
       router.push(`?${newSearchParams.toString()}`);
     },
     300,
-    [packageName, instrument, student, startTime, endTime],
+    [packageName, instrument, student, startDate, endDate],
   );
 
   useEffect(() => {
@@ -177,12 +177,12 @@ const PackagesPage = () => {
                   variant={"outline"}
                   className={cn(
                     "w-[280px] justify-start text-left font-normal",
-                    !startTime && "text-muted-foreground",
+                    !startDate && "text-muted-foreground",
                   )}
                 >
                   <CalendarIcon />
-                  {startTime ? (
-                    format(startTime, "PPP")
+                  {startDate ? (
+                    format(startDate, "PPP")
                   ) : (
                     <span>Pick a date</span>
                   )}
@@ -191,8 +191,8 @@ const PackagesPage = () => {
               <PopoverContent className="w-auto p-0">
                 <Calendar
                   mode="single"
-                  selected={startTime}
-                  onSelect={setStartTime}
+                  selected={startDate}
+                  onSelect={setStartDate}
                   initialFocus
                 />
               </PopoverContent>
@@ -207,18 +207,18 @@ const PackagesPage = () => {
                   variant={"outline"}
                   className={cn(
                     "w-[280px] justify-start text-left font-normal",
-                    !endTime && "text-muted-foreground",
+                    !endDate && "text-muted-foreground",
                   )}
                 >
                   <CalendarIcon />
-                  {endTime ? format(endTime, "PPP") : <span>Pick a date</span>}
+                  {endDate ? format(endDate, "PPP") : <span>Pick a date</span>}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0">
                 <Calendar
                   mode="single"
-                  selected={endTime}
-                  onSelect={setEndTime}
+                  selected={endDate}
+                  onSelect={setEndDate}
                   initialFocus
                 />
               </PopoverContent>
