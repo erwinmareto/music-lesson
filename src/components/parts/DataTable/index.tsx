@@ -96,8 +96,8 @@ export default function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      <div className="flex items-center justify-end gap-8">
-        <p className="max-md:hidden">{`Page ${currentPage} of ${totalPages}`}</p>
+      <div className="flex items-center justify-end gap-8 my-2">
+        <p>{`Page ${currentPage} of ${totalPages}`}</p>
         <div className="flex items-center justify-end gap-2">
           <Button
             variant="secondary"
