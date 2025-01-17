@@ -4,6 +4,7 @@ import directus from "@/lib/directus";
 export const getLessons = async (
   page: number,
   filter: Record<string, unknown>,
+  isFilterEmpty: boolean,
 ) => {
   const response = await directus.request(
     readItems("lessons", {
@@ -18,6 +19,7 @@ export const getLessons = async (
       limit: 10,
       page: page,
       filter: filter,
+      sort: [isFilterEmpty ? "" : "-start_datetime"],
     }),
   );
 

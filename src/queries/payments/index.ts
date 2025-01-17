@@ -11,7 +11,12 @@ import {
   REVENUE_BY_MONTH_QUERY_KEY,
   REVENUE_SUM_QUERY_KEY,
 } from "@/lib/constants/queryKeys";
-import { Filters, getFilters, getFiltersQueryKeys } from "@/lib/filter";
+import {
+  checkIsFiltersEmpty,
+  Filters,
+  getFilters,
+  getFiltersQueryKeys,
+} from "@/lib/filter";
 
 export const usePaymentCount = (filters?: Filters[]) => {
   const paymentCountFilters = filters ? getFilters(filters) : {};
@@ -49,9 +54,11 @@ export const usePayments = (page: number, filters: Filters[]) => {
 
   const filtersQueryKeys = getFiltersQueryKeys(filters);
 
+  const isFiltersEmpty = checkIsFiltersEmpty(filters);
+
   const result = useQuery({
     queryKey: [PAYMENT_QUERY_KEY, page, ...filtersQueryKeys],
-    queryFn: () => getPayments(page, paymentFilters),
+    queryFn: () => getPayments(page, paymentFilters, isFiltersEmpty),
   });
 
   return result;

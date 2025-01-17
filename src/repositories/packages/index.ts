@@ -32,6 +32,7 @@ export const getTopInstruments = async () => {
 export const getPackages = async (
   page: number,
   filter: Record<string, unknown>,
+  isFilterEmpty: boolean,
 ) => {
   const response = await directus.request(
     readItems("packages", {
@@ -48,6 +49,7 @@ export const getPackages = async (
       limit: 10,
       page: page,
       filter: filter,
+      sort: [isFilterEmpty ? "" : "-start_datetime"],
     }),
   );
 
