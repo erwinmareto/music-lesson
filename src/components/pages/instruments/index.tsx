@@ -25,6 +25,7 @@ const InstrumentsPage = () => {
     {
       field: "name",
       query: searchParams.get("instrumentName"),
+      dataType: "search",
     },
   ];
   const instrumentsQuery = useInstruments(currentPage, instrumentsFilters);

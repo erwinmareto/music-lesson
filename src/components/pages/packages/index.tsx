@@ -12,7 +12,7 @@ import { Filters } from "@/lib/filter";
 import { combineSearchParams, removeSearchParams } from "@/lib/url";
 import { usePackageCount, usePackages } from "@/queries/packages";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const PackagesPage = () => {
   const router = useRouter();
@@ -24,11 +24,23 @@ const PackagesPage = () => {
   //   const [endTime, setEndTime] = useState("");
 
   const lessonFilters: Filters[] = [
-    { field: "name", query: searchParams.get("packageName") },
-    { field: "start_datetime", query: searchParams.get("start") },
-    { field: "end_datetime", query: searchParams.get("end") },
-    { field: ["instrument", "name"], query: searchParams.get("instrument") },
-    { field: ["student", "first_name"], query: searchParams.get("student") },
+    {
+      field: "name",
+      query: searchParams.get("packageName"),
+      dataType: "search",
+    },
+    // { field: "start_datetime", query: searchParams.get("start") },
+    // { field: "end_datetime", query: searchParams.get("end") },
+    {
+      field: ["instrument", "name"],
+      query: searchParams.get("instrument"),
+      dataType: "search",
+    },
+    {
+      field: ["student", "first_name"],
+      query: searchParams.get("student"),
+      dataType: "search",
+    },
   ];
 
   const [currentPage, setCurrentPage] = useState(0);
@@ -117,6 +129,10 @@ const PackagesPage = () => {
       //  startTime, endTime
     ],
   );
+
+  useEffect(() => {
+    setCurrentPage(0); // reset page to 0 when filters applied
+  }, [searchParams]);
 
   return (
     <div className="container mx-auto p-2 md:p-10">
