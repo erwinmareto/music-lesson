@@ -30,9 +30,6 @@ import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
-//TODO: get all currency
-//TODO: rate has to be equal or bigger than (number)
-//TODO: date
 
 const PaymentsPage = () => {
   const router = useRouter();
