@@ -14,6 +14,10 @@ export const PACKAGE_QUERY_KEY = "package";
 
 export const PACKAGE_COUNT_QUERY_KEY = "packageCount";
 
+export const PAYMENT_QUERY_KEY = "payment";
+
+export const PAYMENT_COUNT_QUERY_KEY = "paymentCount";
+
 export const REVENUE_SUM_QUERY_KEY = "revenueSum";
 
 export const REVENUE_BY_MONTH_QUERY_KEY = "revenueByMonth";
