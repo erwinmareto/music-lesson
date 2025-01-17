@@ -3,14 +3,24 @@
 import DataTable from "@/components/parts/DataTable";
 import { packagesColumns } from "@/components/parts/DataTable/columns";
 import ReactQuery from "@/components/parts/ReactQuery";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import useDebounce from "@/hooks/useDebounce";
 import { DATA_LIMIT } from "@/lib/constants/datas";
 import { Filters } from "@/lib/filter";
 import { combineSearchParams, removeSearchParams } from "@/lib/url";
+import { cn } from "@/lib/utils";
 import { usePackageCount, usePackages } from "@/queries/packages";
+import { format } from "date-fns";
+import { CalendarIcon } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -20,8 +30,8 @@ const PackagesPage = () => {
   const [packageName, setPackageName] = useState("");
   const [instrument, setInstrument] = useState("");
   const [student, setStudent] = useState("");
-  //   const [startTime, setStartTime] = useState("");
-  //   const [endTime, setEndTime] = useState("");
+  const [startTime, setStartTime] = useState<Date>();
+  const [endTime, setEndTime] = useState<Date>();
 
   const lessonFilters: Filters[] = [
     {
@@ -29,8 +39,12 @@ const PackagesPage = () => {
       query: searchParams.get("packageName"),
       dataType: "search",
     },
-    // { field: "start_datetime", query: searchParams.get("start") },
-    // { field: "end_datetime", query: searchParams.get("end") },
+    {
+      field: "start_datetime",
+      query: searchParams.get("start"),
+      dataType: "date",
+    },
+    { field: "end_datetime", query: searchParams.get("end"), dataType: "date" },
     {
       field: ["instrument", "name"],
       query: searchParams.get("instrument"),
@@ -58,14 +72,6 @@ const PackagesPage = () => {
   const handleStudent = (student: string) => {
     setStudent(student);
   };
-
-  //   const handleStartTime = (start: string) => {
-  //     setStartTime(start);
-  //   };
-
-  //   const handleEndTime = (end: string) => {
-  //     setEndTime(end);
-  //   };
 
   const handleNextPage = () => {
     if (hasMorePage) {
@@ -106,13 +112,13 @@ const PackagesPage = () => {
         paramsObject.student = student;
       }
 
-      //   if (startTime) {
-      //     paramsObject.start = startTime;
-      //   }
+      if (startTime) {
+        paramsObject.start = startTime.toISOString().split("T")[0];
+      }
 
-      //   if (endTime) {
-      //     paramsObject.end = endTime;
-      //   }
+      if (endTime) {
+        paramsObject.end = endTime.toISOString().split("T")[0];
+      }
 
       const newSearchParams = combineSearchParams(
         newParamsRemoved,
@@ -122,12 +128,7 @@ const PackagesPage = () => {
       router.push(`?${newSearchParams.toString()}`);
     },
     300,
-    [
-      packageName,
-      instrument,
-      student,
-      //  startTime, endTime
-    ],
+    [packageName, instrument, student, startTime, endTime],
   );
 
   useEffect(() => {
@@ -168,18 +169,61 @@ const PackagesPage = () => {
               className="max-w-sm"
             />
           </div>
-          {/* <div className="space-y-2">
-            <Label htmlFor="status">Status:</Label>
-            <Select onValueChange={handleStatus} value={status}>
-              <SelectTrigger id="status" className="max-w-sm">
-                <SelectValue placeholder={status || "Select status"} />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="absent">Absent</SelectItem>
-                <SelectItem value="attended">Attended</SelectItem>
-              </SelectContent>
-            </Select>
-          </div> */}
+          <div className="flex flex-col gap-2">
+            <Label>Start Date:</Label>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant={"outline"}
+                  className={cn(
+                    "w-[280px] justify-start text-left font-normal",
+                    !startTime && "text-muted-foreground",
+                  )}
+                >
+                  <CalendarIcon />
+                  {startTime ? (
+                    format(startTime, "PPP")
+                  ) : (
+                    <span>Pick a date</span>
+                  )}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0">
+                <Calendar
+                  mode="single"
+                  selected={startTime}
+                  onSelect={setStartTime}
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <Label>End Date:</Label>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant={"outline"}
+                  className={cn(
+                    "w-[280px] justify-start text-left font-normal",
+                    !endTime && "text-muted-foreground",
+                  )}
+                >
+                  <CalendarIcon />
+                  {endTime ? format(endTime, "PPP") : <span>Pick a date</span>}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0">
+                <Calendar
+                  mode="single"
+                  selected={endTime}
+                  onSelect={setEndTime}
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
+          </div>
         </div>
         <ReactQuery
           queryResult={packagesQuery}
