@@ -55,3 +55,7 @@ export const getFiltersQueryKeys = (filters: Filters[]) => {
     .map((filter) => filter.query);
   return queryKeys;
 };
+
+export const checkIsFiltersEmpty = (filters: Filters[]) => {
+  return filters.every((filter) => !filter.query?.length);
+};
