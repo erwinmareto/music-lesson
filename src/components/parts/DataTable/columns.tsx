@@ -18,7 +18,7 @@ export interface PackagesData {
   id: number;
   name: string;
   student: {
-    students_id: string;
+    first_name: string;
   };
   instruments: {
     name: string;
@@ -37,6 +37,17 @@ export interface LessonData {
   teacher: {
     first_name: string;
     last_name: string;
+  };
+}
+
+export interface PaymentData {
+  id: number;
+  payment_id: string;
+  currency: string;
+  rate: number;
+  payment_date: string;
+  package: {
+    name: string;
   };
 }
 
@@ -127,7 +138,40 @@ export const packagesColumns: ColumnDef<PackagesData>[] = [
     accessorKey: "end_datetime",
     header: "End Date",
     cell: ({ row }) => {
-      const parsedDate = parseISO(row.getValue<string>("start_datetime"));
+      const parsedDate = parseISO(row.getValue<string>("end_datetime"));
+      const formattedDate = format(parsedDate, "MMM d, yyyy");
+      return <p>{formattedDate}</p>;
+    },
+  },
+];
+
+export const paymentsColumns: ColumnDef<PaymentData>[] = [
+  {
+    accessorKey: "id",
+    header: "ID",
+  },
+  {
+    accessorKey: "payment_id",
+    header: "Payment ID",
+  },
+
+  {
+    accessorKey: "currency",
+    header: "Currency",
+  },
+  {
+    accessorKey: "rate",
+    header: "Rate",
+  },
+  {
+    accessorKey: "package.name",
+    header: "Package Name",
+  },
+  {
+    accessorKey: "payment_date",
+    header: "Payment Date",
+    cell: ({ row }) => {
+      const parsedDate = parseISO(row.getValue<string>("payment_date"));
       const formattedDate = format(parsedDate, "MMM d, yyyy");
       return <p>{formattedDate}</p>;
     },
