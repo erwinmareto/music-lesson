@@ -10,16 +10,23 @@ import {
   LESSON_COUNT_QUERY_KEY,
   LESSON_QUERY_KEY,
 } from "@/lib/constants/queryKeys";
-import { Filters, getFilters, getFiltersQueryKeys } from "@/lib/filter";
+import {
+  checkIsFiltersEmpty,
+  Filters,
+  getFilters,
+  getFiltersQueryKeys,
+} from "@/lib/filter";
 
 export const useLessons = (page: number, filters: Filters[]) => {
   const lessonFilters = getFilters(filters);
 
   const filtersQueryKeys = getFiltersQueryKeys(filters);
 
+  const isFiltersEmpty = checkIsFiltersEmpty(filters);
+
   const result = useQuery({
     queryKey: [LESSON_QUERY_KEY, page, ...filtersQueryKeys],
-    queryFn: () => getLessons(page, lessonFilters),
+    queryFn: () => getLessons(page, lessonFilters, isFiltersEmpty),
   });
 
   return result;

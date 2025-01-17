@@ -19,7 +19,7 @@ const InstrumentsPage = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [instrumentName, setInstrumentName] = useState("");
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const instrumentsFilters: Filters[] = [
     {
@@ -50,7 +50,7 @@ const InstrumentsPage = () => {
   const totalPages = Math.ceil(
     parseInt(instrumentCountData || "0") / DATA_LIMIT,
   );
-  const hasMorePage = currentPage < totalPages - 1; // reduce page total by 1 because current page start from 0
+  const hasMorePage = currentPage < totalPages;
 
   useDebounce(
     () => {

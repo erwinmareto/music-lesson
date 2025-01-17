@@ -42,6 +42,7 @@ export const getRevenueByMonth = async () => {
 export const getPayments = async (
   page: number,
   filter: Record<string, unknown>,
+  isFilterEmpty: boolean,
 ) => {
   const response = await directus.request(
     readItems("payments", {
@@ -56,6 +57,7 @@ export const getPayments = async (
       limit: 10,
       page: page,
       filter: filter,
+      sort: [isFilterEmpty ? "" : "-payment_date"],
     }),
   );
 

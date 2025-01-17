@@ -9,7 +9,12 @@ import {
   PACKAGE_QUERY_KEY,
   TOP_INSTRUMENTS_QUERY_KEY,
 } from "@/lib/constants/queryKeys";
-import { Filters, getFilters, getFiltersQueryKeys } from "@/lib/filter";
+import {
+  checkIsFiltersEmpty,
+  Filters,
+  getFilters,
+  getFiltersQueryKeys,
+} from "@/lib/filter";
 
 export const usePackageCount = (filters?: Filters[]) => {
   const packageCountFilters = filters ? getFilters(filters) : {};
@@ -37,9 +42,11 @@ export const usePackages = (page: number, filters: Filters[]) => {
 
   const filtersQueryKeys = getFiltersQueryKeys(filters);
 
+  const isFiltersEmpty = checkIsFiltersEmpty(filters);
+
   const result = useQuery({
     queryKey: [PACKAGE_QUERY_KEY, page, ...filtersQueryKeys],
-    queryFn: () => getPackages(page, packageFilters),
+    queryFn: () => getPackages(page, packageFilters, isFiltersEmpty),
   });
 
   return result;
