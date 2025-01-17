@@ -5,8 +5,6 @@ import { useState } from "react";
 import DataTable from "@/components/parts/DataTable";
 import ReactQuery from "@/components/parts/ReactQuery";
 import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { useInstrumentCount, useInstruments } from "@/queries/instruments";
 import { DATA_LIMIT } from "@/lib/constants/datas";
 import { Filters } from "@/lib/filter";
@@ -15,6 +13,7 @@ import useDebounce from "@/hooks/useDebounce";
 import { combineSearchParams, removeSearchParams } from "@/lib/url";
 import { instrumentsColumns } from "@/components/parts/DataTable/columns";
 import PaginationControls from "@/components/parts/DataTable/pagination";
+import SearchInput from "@/components/parts/SearchInput";
 
 const InstrumentsPage = () => {
   const router = useRouter();
@@ -81,16 +80,13 @@ const InstrumentsPage = () => {
       <Card className="p-2 md:p-4">
         <div className="flex flex-wrap items-center gap-4 py-4">
           <div className="flex flex-col">
-            <div className="space-y-1">
-              <Label htmlFor="instrumentName">Instrument Name:</Label>
-              <Input
-                id="instrumentName"
-                placeholder="Search instrument...."
-                value={instrumentName}
-                onChange={(event) => handleInstrumentName(event.target.value)}
-                className="max-w-sm"
-              />
-            </div>
+            <SearchInput
+              id="instrumentName"
+              label="Instrument Name"
+              placeholder="Search instrument...."
+              value={instrumentName}
+              onChange={handleInstrumentName}
+            />
           </div>
         </div>
         <ReactQuery

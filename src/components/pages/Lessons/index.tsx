@@ -11,7 +11,6 @@ import { DATA_LIMIT } from "@/lib/constants/datas";
 import useDebounce from "@/hooks/useDebounce";
 import { combineSearchParams, removeSearchParams } from "@/lib/url";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -32,6 +31,7 @@ import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
 import PaginationControls from "@/components/parts/DataTable/pagination";
+import SearchInput from "@/components/parts/SearchInput";
 
 const LessonsPage = () => {
   const router = useRouter();
@@ -122,16 +122,13 @@ const LessonsPage = () => {
       <Card className="p-2 md:p-4">
         <div className="flex flex-wrap items-center gap-4 py-4">
           <div className="flex flex-col">
-            <div className="space-y-1">
-              <Label htmlFor="teacher">Teacher:</Label>
-              <Input
-                id="teacher"
-                placeholder="Search teacher...."
-                value={teacher}
-                onChange={(event) => handleTeacher(event.target.value)}
-                className="max-w-sm"
-              />
-            </div>
+            <SearchInput
+              id="teacher"
+              label="Teacher"
+              placeholder="Search teacher...."
+              value={teacher}
+              onChange={handleTeacher}
+            />
           </div>
           <div className="space-y-2">
             <Label htmlFor="status">Status:</Label>

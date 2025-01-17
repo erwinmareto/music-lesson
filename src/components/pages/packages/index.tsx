@@ -4,10 +4,10 @@ import DataTable from "@/components/parts/DataTable";
 import { packagesColumns } from "@/components/parts/DataTable/columns";
 import PaginationControls from "@/components/parts/DataTable/pagination";
 import ReactQuery from "@/components/parts/ReactQuery";
+import SearchInput from "@/components/parts/SearchInput";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
   Popover,
@@ -140,36 +140,29 @@ const PackagesPage = () => {
     <div className="container mx-auto p-2 md:p-10">
       <Card className="p-2 md:p-4">
         <div className="flex flex-wrap items-center gap-4 py-4">
-          <div className="space-y-1">
-            <Label htmlFor="package">Package:</Label>
-            <Input
-              id="package"
-              placeholder="Search package...."
-              value={packageName}
-              onChange={(event) => handlePackageName(event.target.value)}
-              className="max-w-sm"
-            />
-          </div>
-          <div className="space-y-1">
-            <Label htmlFor="instrument">Instrument:</Label>
-            <Input
-              id="instrument"
-              placeholder="Search instrument...."
-              value={instrument}
-              onChange={(event) => handleInstrument(event.target.value)}
-              className="max-w-sm"
-            />
-          </div>
-          <div className="space-y-1">
-            <Label htmlFor="student">Student:</Label>
-            <Input
-              id="student"
-              placeholder="Search student...."
-              value={student}
-              onChange={(event) => handleStudent(event.target.value)}
-              className="max-w-sm"
-            />
-          </div>
+          <SearchInput
+            id="packageName"
+            value={packageName}
+            label="Package Name"
+            onChange={handlePackageName}
+            placeholder="Package Name"
+          />
+
+          <SearchInput
+            id="instrument"
+            value={instrument}
+            label="Instrument"
+            onChange={handleInstrument}
+            placeholder="Instrument"
+          />
+
+          <SearchInput
+            id="student"
+            value={student}
+            label="Student"
+            onChange={handleStudent}
+            placeholder="Student"
+          />
           <div className="flex flex-col gap-2">
             <Label>Start Date:</Label>
             <Popover>

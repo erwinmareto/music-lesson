@@ -4,10 +4,10 @@ import DataTable from "@/components/parts/DataTable";
 import { paymentsColumns } from "@/components/parts/DataTable/columns";
 import PaginationControls from "@/components/parts/DataTable/pagination";
 import ReactQuery from "@/components/parts/ReactQuery";
+import SearchInput from "@/components/parts/SearchInput";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
   Popover,
@@ -136,27 +136,21 @@ const PaymentsPage = () => {
     <div className="container mx-auto p-2 md:p-10">
       <Card className="p-2 md:p-4">
         <div className="flex items-center flex-wrap gap-4 py-4">
-          <div className="flex flex-col gap-2">
-            <Label htmlFor="package">Package:</Label>
-            <Input
-              id="package"
-              placeholder="Search package...."
-              value={packageName}
-              onChange={(event) => handlePackageName(event.target.value)}
-              className="max-w-sm"
-            />
-          </div>
-          <div className="flex flex-col gap-2">
-            <Label htmlFor="rate">Rate:</Label>
-            <Input
-              id="rate"
-              placeholder="Search instrument...."
-              value={rate}
-              onChange={(event) => handleRate(event.target.value)}
-              className="max-w-sm"
-            />
-          </div>
+          <SearchInput
+            id="package"
+            label="Package"
+            placeholder="Search package...."
+            value={packageName}
+            onChange={handlePackageName}
+          />
 
+          <SearchInput
+            id="rate"
+            label="Rate"
+            placeholder="Search rate...."
+            value={rate}
+            onChange={handleRate}
+          />
           <div className="flex flex-col gap-2">
             <Label htmlFor="currency">Currency:</Label>
             <Select onValueChange={handleCurrency} value={currency}>
