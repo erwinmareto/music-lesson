@@ -29,7 +29,7 @@ import { usePaymentCount, usePayments } from "@/queries/payments";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const PaymentsPage = () => {
   const router = useRouter();
@@ -58,7 +58,7 @@ const PaymentsPage = () => {
     },
   ];
 
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const packagesQuery = usePayments(currentPage, paymentsFilters);
   const { data: paymentCountData } = usePaymentCount(paymentsFilters);
 
@@ -81,13 +81,13 @@ const PaymentsPage = () => {
   };
 
   const handlePreviousPage = () => {
-    if (currentPage > 0) {
+    if (currentPage > 1) {
       setCurrentPage((prevPage) => prevPage - 1);
     }
   };
 
-  const totalPages = Math.ceil(parseInt(paymentCountData || "0") / DATA_LIMIT);
-  const hasMorePage = currentPage <= totalPages - 1; // reduce page total by 1 because current page start from 0
+  const totalPages = Math.ceil(parseInt(paymentCountData || "1") / DATA_LIMIT);
+  const hasMorePage = currentPage < totalPages;
 
   useDebounce(
     () => {
@@ -126,6 +126,10 @@ const PaymentsPage = () => {
     300,
     [packageName, currency, rate, paymentDate],
   );
+
+  useEffect(() => {
+    setCurrentPage(1); // reset page to 1 when filters applied
+  }, [searchParams]);
 
   return (
     <div className="container mx-auto p-2 md:p-10">

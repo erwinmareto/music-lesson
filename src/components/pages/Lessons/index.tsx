@@ -52,7 +52,7 @@ const LessonsPage = () => {
       dataType: "date",
     },
   ];
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const lessonsQuery = useLessons(currentPage, lessonFilters);
   const { data: lessonCountData } = useLessonCount(lessonFilters);
 
@@ -77,7 +77,7 @@ const LessonsPage = () => {
   };
 
   const totalPages = Math.ceil(parseInt(lessonCountData || "0") / DATA_LIMIT);
-  const hasMorePage = currentPage <= totalPages - 1; // reduce page total by 1 because current page start from 0
+  const hasMorePage = currentPage < totalPages;
 
   useDebounce(
     () => {
@@ -113,7 +113,7 @@ const LessonsPage = () => {
   );
 
   useEffect(() => {
-    setCurrentPage(0); // reset page to 0 when filters applied
+    setCurrentPage(1); // reset page to 1 when filters applied
   }, [searchParams]);
 
   return (
