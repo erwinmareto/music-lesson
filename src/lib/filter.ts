@@ -1,7 +1,7 @@
 export interface Filters {
   field: string | string[];
   query: string | null;
-  dataType: "search" | "number" | "date" | "dateRange";
+  dataType: "search" | "number" | "date";
 }
 
 export const getFilters = (filters: Filters[]) => {
@@ -15,14 +15,8 @@ export const getFilters = (filters: Filters[]) => {
           condition = { _icontains: query };
           break;
         case "number":
-          condition = { _gte: query };
-          break;
         case "date":
-          condition = { _eq: query };
-          break;
-        case "dateRange":
-          const [startDate, endDate] = query.split(",");
-          condition = { _between: [startDate, endDate] };
+          condition = { _gte: query };
           break;
         default:
           condition = { _icontains: query };
@@ -33,7 +27,7 @@ export const getFilters = (filters: Filters[]) => {
           (
             nestedAcc: Record<string, unknown>,
             key,
-            index
+            index,
           ): Record<string, unknown> => {
             if (index === field.length - 1) {
               nestedAcc[key] = condition;
@@ -42,14 +36,14 @@ export const getFilters = (filters: Filters[]) => {
             }
             return nestedAcc[key] as Record<string, unknown>;
           },
-          acc
+          acc,
         );
       } else {
         acc[field] = condition;
       }
       return acc;
     },
-    {}
+    {},
   );
 
   return processedFilters;
