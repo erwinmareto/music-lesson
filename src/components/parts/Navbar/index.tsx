@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import { Menu, Music } from "lucide-react";
 import Link from "next/link";
-import RightMenu from "./RightMenu";
+import MobileMenu from "./MobileMenu";
 import { cn } from "@/lib/utils";
 
 const Navbar = () => {
@@ -47,7 +47,7 @@ const Navbar = () => {
           onClick={handleMenu}
         />
       </nav>
-      {isOpen && <RightMenu />}
+      {isOpen && <MobileMenu />}
     </header>
   );
 };
