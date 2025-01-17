@@ -2,6 +2,7 @@
 
 import DataTable from "@/components/parts/DataTable";
 import { paymentsColumns } from "@/components/parts/DataTable/columns";
+import PaginationControls from "@/components/parts/DataTable/pagination";
 import ReactQuery from "@/components/parts/ReactQuery";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -200,16 +201,25 @@ const PaymentsPage = () => {
         <ReactQuery
           queryResult={packagesQuery}
           render={(data) => (
-            <DataTable
-              // @ts-expect-error the type is already correct (what is written down in the docs) but it is still complaining
-              columns={paymentsColumns}
-              data={data}
-              currentPage={currentPage}
-              prevPageHandler={handlePreviousPage}
-              nextPageHandler={handleNextPage}
-              hasMorePage={hasMorePage}
-              totalPages={totalPages}
-            />
+            <>
+              <DataTable
+                // @ts-expect-error the type is already correct (what is written down in the docs) but it is still complaining
+                columns={paymentsColumns}
+                data={data}
+                currentPage={currentPage}
+                prevPageHandler={handlePreviousPage}
+                nextPageHandler={handleNextPage}
+                hasMorePage={hasMorePage}
+                totalPages={totalPages}
+              />
+              <PaginationControls
+                currentPage={currentPage}
+                totalPages={totalPages}
+                hasMorePage={hasMorePage}
+                handleNextPage={handleNextPage}
+                handlePreviousPage={handlePreviousPage}
+              />
+            </>
           )}
         />
       </Card>

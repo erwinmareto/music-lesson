@@ -14,6 +14,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import useDebounce from "@/hooks/useDebounce";
 import { combineSearchParams, removeSearchParams } from "@/lib/url";
 import { instrumentsColumns } from "@/components/parts/DataTable/columns";
+import PaginationControls from "@/components/parts/DataTable/pagination";
 
 const InstrumentsPage = () => {
   const router = useRouter();
@@ -95,16 +96,25 @@ const InstrumentsPage = () => {
         <ReactQuery
           queryResult={instrumentsQuery}
           render={(data) => (
-            <DataTable
-              // @ts-expect-error the type is already correct (what is written down in the docs) but it is still complaining
-              columns={instrumentsColumns}
-              data={data}
-              currentPage={currentPage}
-              prevPageHandler={handlePreviousPage}
-              nextPageHandler={handleNextPage}
-              hasMorePage={hasMorePage}
-              totalPages={totalPages}
-            />
+            <>
+              <DataTable
+                // @ts-expect-error the type is already correct (what is written down in the docs) but it is still complaining
+                columns={instrumentsColumns}
+                data={data}
+                currentPage={currentPage}
+                prevPageHandler={handlePreviousPage}
+                nextPageHandler={handleNextPage}
+                hasMorePage={hasMorePage}
+                totalPages={totalPages}
+              />
+              <PaginationControls
+                currentPage={currentPage}
+                totalPages={totalPages}
+                hasMorePage={hasMorePage}
+                handleNextPage={handleNextPage}
+                handlePreviousPage={handlePreviousPage}
+              />
+            </>
           )}
         />
       </Card>

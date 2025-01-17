@@ -31,6 +31,7 @@ import { cn } from "@/lib/utils";
 import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
+import PaginationControls from "@/components/parts/DataTable/pagination";
 
 const LessonsPage = () => {
   const router = useRouter();
@@ -177,16 +178,25 @@ const LessonsPage = () => {
         <ReactQuery
           queryResult={lessonsQuery}
           render={(data) => (
-            <DataTable
-              // @ts-expect-error the type is already correct (what is written down in the docs) but it is still complaining
-              columns={lessonsColumns}
-              data={data}
-              currentPage={currentPage}
-              prevPageHandler={handlePreviousPage}
-              nextPageHandler={handleNextPage}
-              hasMorePage={hasMorePage}
-              totalPages={totalPages}
-            />
+            <>
+              <DataTable
+                // @ts-expect-error the type is already correct (what is written down in the docs) but it is still complaining
+                columns={lessonsColumns}
+                data={data}
+                currentPage={currentPage}
+                prevPageHandler={handlePreviousPage}
+                nextPageHandler={handleNextPage}
+                hasMorePage={hasMorePage}
+                totalPages={totalPages}
+              />
+              <PaginationControls
+                currentPage={currentPage}
+                handlePreviousPage={handlePreviousPage}
+                handleNextPage={handleNextPage}
+                hasMorePage={hasMorePage}
+                totalPages={totalPages}
+              />
+            </>
           )}
         />
       </Card>
