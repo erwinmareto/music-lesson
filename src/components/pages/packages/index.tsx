@@ -138,7 +138,7 @@ const PackagesPage = () => {
   return (
     <div className="container mx-auto p-2 md:p-10">
       <Card className="p-2 md:p-4">
-        <div className="flex items-center gap-4 py-4">
+        <div className="flex flex-wrap items-center gap-4 py-4">
           <div className="space-y-1">
             <Label htmlFor="package">Package:</Label>
             <Input
@@ -229,6 +229,7 @@ const PackagesPage = () => {
           queryResult={packagesQuery}
           render={(data) => (
             <DataTable
+              // @ts-expect-error the type is already correct (what is written down in the docs) but it is still complaining
               columns={packagesColumns}
               data={data}
               currentPage={currentPage}

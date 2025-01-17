@@ -78,7 +78,7 @@ const InstrumentsPage = () => {
   return (
     <div className="container mx-auto p-2 md:p-10">
       <Card className="p-2 md:p-4">
-        <div className="flex items-center gap-4 py-4">
+        <div className="flex flex-wrap items-center gap-4 py-4">
           <div className="flex flex-col">
             <div className="space-y-1">
               <Label htmlFor="instrumentName">Instrument Name:</Label>

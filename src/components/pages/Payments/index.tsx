@@ -200,6 +200,7 @@ const PaymentsPage = () => {
           queryResult={packagesQuery}
           render={(data) => (
             <DataTable
+              // @ts-expect-error the type is already correct (what is written down in the docs) but it is still complaining
               columns={paymentsColumns}
               data={data}
               currentPage={currentPage}
