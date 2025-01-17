@@ -3,25 +3,15 @@
 import DataTable from "@/components/parts/DataTable";
 import { packagesColumns } from "@/components/parts/DataTable/columns";
 import PaginationControls from "@/components/parts/DataTable/pagination";
+import DatePicker from "@/components/parts/DatePicker";
 import ReactQuery from "@/components/parts/ReactQuery";
 import SearchInput from "@/components/parts/SearchInput";
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
 import { Card } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import useDebounce from "@/hooks/useDebounce";
 import { DATA_LIMIT } from "@/lib/constants/datas";
 import { Filters } from "@/lib/filter";
 import { combineSearchParams, removeSearchParams } from "@/lib/url";
-import { cn } from "@/lib/utils";
 import { usePackageCount, usePackages } from "@/queries/packages";
-import { format } from "date-fns";
-import { CalendarIcon } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -163,61 +153,16 @@ const PackagesPage = () => {
             onChange={handleStudent}
             placeholder="Student"
           />
-          <div className="flex flex-col gap-2">
-            <Label>Start Date:</Label>
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  variant={"outline"}
-                  className={cn(
-                    "w-[280px] justify-start text-left font-normal",
-                    !startDate && "text-muted-foreground",
-                  )}
-                >
-                  <CalendarIcon />
-                  {startDate ? (
-                    format(startDate, "PPP")
-                  ) : (
-                    <span>Pick a date</span>
-                  )}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0">
-                <Calendar
-                  mode="single"
-                  selected={startDate}
-                  onSelect={setStartDate}
-                  initialFocus
-                />
-              </PopoverContent>
-            </Popover>
-          </div>
-
-          <div className="flex flex-col gap-2">
-            <Label>End Date:</Label>
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  variant={"outline"}
-                  className={cn(
-                    "w-[280px] justify-start text-left font-normal",
-                    !endDate && "text-muted-foreground",
-                  )}
-                >
-                  <CalendarIcon />
-                  {endDate ? format(endDate, "PPP") : <span>Pick a date</span>}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0">
-                <Calendar
-                  mode="single"
-                  selected={endDate}
-                  onSelect={setEndDate}
-                  initialFocus
-                />
-              </PopoverContent>
-            </Popover>
-          </div>
+          <DatePicker
+            label="Start Date"
+            selectedDate={startDate}
+            onSelectDate={setStartDate}
+          />
+          <DatePicker
+            label="End Date"
+            selectedDate={endDate}
+            onSelectDate={setEndDate}
+          />
         </div>
         <ReactQuery
           queryResult={packagesQuery}

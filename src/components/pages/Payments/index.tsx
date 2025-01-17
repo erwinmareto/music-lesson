@@ -3,17 +3,11 @@
 import DataTable from "@/components/parts/DataTable";
 import { paymentsColumns } from "@/components/parts/DataTable/columns";
 import PaginationControls from "@/components/parts/DataTable/pagination";
+import DatePicker from "@/components/parts/DatePicker";
 import ReactQuery from "@/components/parts/ReactQuery";
 import SearchInput from "@/components/parts/SearchInput";
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
 import { Card } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import {
   Select,
   SelectContent,
@@ -25,10 +19,7 @@ import useDebounce from "@/hooks/useDebounce";
 import { DATA_LIMIT } from "@/lib/constants/datas";
 import { Filters } from "@/lib/filter";
 import { combineSearchParams, removeSearchParams } from "@/lib/url";
-import { cn } from "@/lib/utils";
 import { usePaymentCount, usePayments } from "@/queries/payments";
-import { format } from "date-fns";
-import { CalendarIcon } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -162,35 +153,11 @@ const PaymentsPage = () => {
               </SelectContent>
             </Select>
           </div>
-          <div className="flex flex-col gap-2">
-            <Label>Payment Date:</Label>
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  variant={"outline"}
-                  className={cn(
-                    "w-[280px] justify-start text-left font-normal",
-                    !paymentDate && "text-muted-foreground",
-                  )}
-                >
-                  <CalendarIcon />
-                  {paymentDate ? (
-                    format(paymentDate, "PPP")
-                  ) : (
-                    <span>Pick a date</span>
-                  )}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0">
-                <Calendar
-                  mode="single"
-                  selected={paymentDate}
-                  onSelect={setPaymentDate}
-                  initialFocus
-                />
-              </PopoverContent>
-            </Popover>
-          </div>
+          <DatePicker
+            label="Payment Date"
+            selectedDate={paymentDate}
+            onSelectDate={setPaymentDate}
+          />
         </div>
         <ReactQuery
           queryResult={packagesQuery}
