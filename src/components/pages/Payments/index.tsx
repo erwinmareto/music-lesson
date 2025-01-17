@@ -6,17 +6,10 @@ import PaginationControls from "@/components/parts/DataTable/pagination";
 import DatePicker from "@/components/parts/DatePicker";
 import ReactQuery from "@/components/parts/ReactQuery";
 import SearchInput from "@/components/parts/SearchInput";
+import SelectInput from "@/components/parts/SelectInput";
 import { Card } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import useDebounce from "@/hooks/useDebounce";
-import { DATA_LIMIT } from "@/lib/constants/datas";
+import { DATA_LIMIT, PAYMENT_CURRENCY } from "@/lib/constants/datas";
 import { Filters } from "@/lib/filter";
 import { combineSearchParams, removeSearchParams } from "@/lib/url";
 import { usePaymentCount, usePayments } from "@/queries/payments";
@@ -142,17 +135,14 @@ const PaymentsPage = () => {
             value={rate}
             onChange={handleRate}
           />
-          <div className="flex flex-col gap-2">
-            <Label htmlFor="currency">Currency:</Label>
-            <Select onValueChange={handleCurrency} value={currency}>
-              <SelectTrigger id="currency" className="max-w-sm">
-                <SelectValue placeholder={currency || "Select currency"} />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="SGD">SGD</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+          <SelectInput
+            id="currency"
+            label="Currency"
+            value={currency}
+            onChange={handleCurrency}
+            options={PAYMENT_CURRENCY}
+          />
+
           <DatePicker
             label="Payment Date"
             selectedDate={paymentDate}

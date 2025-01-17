@@ -7,22 +7,15 @@ import { lessonsColumns } from "@/components/parts/DataTable/columns";
 import { useLessonCount, useLessons } from "@/queries/lessons";
 import ReactQuery from "@/components/parts/ReactQuery";
 import { Card } from "@/components/ui/card";
-import { DATA_LIMIT } from "@/lib/constants/datas";
+import { DATA_LIMIT, LESSON_STATUS } from "@/lib/constants/datas";
 import useDebounce from "@/hooks/useDebounce";
 import { combineSearchParams, removeSearchParams } from "@/lib/url";
 import { useRouter, useSearchParams } from "next/navigation";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Label } from "@/components/ui/label";
 import { Filters } from "@/lib/filter";
 import PaginationControls from "@/components/parts/DataTable/pagination";
 import SearchInput from "@/components/parts/SearchInput";
 import DatePicker from "@/components/parts/DatePicker";
+import SelectInput from "@/components/parts/SelectInput";
 
 const LessonsPage = () => {
   const router = useRouter();
@@ -121,18 +114,13 @@ const LessonsPage = () => {
               onChange={handleTeacher}
             />
           </div>
-          <div className="space-y-2">
-            <Label htmlFor="status">Status:</Label>
-            <Select onValueChange={handleStatus} value={status}>
-              <SelectTrigger id="status" className="max-w-sm">
-                <SelectValue placeholder={status || "Select status"} />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="absent">Absent</SelectItem>
-                <SelectItem value="attended">Attended</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+          <SelectInput
+            id="status"
+            label="Status"
+            options={LESSON_STATUS}
+            value={status}
+            onChange={handleStatus}
+          />
           <DatePicker
             selectedDate={startDate}
             onSelectDate={setStartDate}

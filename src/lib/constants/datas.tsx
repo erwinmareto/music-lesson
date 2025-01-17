@@ -34,3 +34,7 @@ export const MONTHS = [
 ];
 
 export const DATA_LIMIT = 10;
+
+export const LESSON_STATUS = ["absent", "attended"];
+
+export const PAYMENT_CURRENCY = ["SGD"];
