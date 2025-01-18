@@ -7,7 +7,7 @@ import LessonChart from '@/components/parts/Charts/LessonChart';
 import RevenueCharts from '@/components/parts/Charts/RevenueChart';
 import OverviewCard from '@/components/parts/OverviewCard';
 import ReactQuery from '@/components/parts/ReactQuery';
-import { UserCountConstant } from '@/lib/constants/datas';
+import { USER_COUNT } from '@/lib/constants/datas';
 import { useInstrumentCount } from '@/queries/instruments';
 import { useLessonCount } from '@/queries/lessons';
 import { usePackageCount } from '@/queries/packages';
@@ -32,7 +32,7 @@ const HomePage = () => {
             queryResult={userCountQuery}
             render={(data) => (
               <>
-                {UserCountConstant.map((item, index) => (
+                {USER_COUNT.map((item, index) => (
                   <OverviewCard
                     key={index}
                     icon={item.icon}

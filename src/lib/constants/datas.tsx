@@ -1,11 +1,11 @@
 import { BookOpen, Users } from 'lucide-react';
 
-export const UserCountConstant = [
+export const USER_COUNT = [
   { icon: <Users />, category: 'Students' },
   { icon: <BookOpen />, category: 'Teachers' }
 ];
 
-export const InstrumentsConstant = [
+export const INSTRUMENTS = [
   'Piano',
   'Violin',
   'Cello',

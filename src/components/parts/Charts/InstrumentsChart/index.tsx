@@ -4,7 +4,7 @@ import { Bar, BarChart, CartesianGrid, LabelList, XAxis, YAxis } from 'recharts'
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
-import { InstrumentsConstant } from '@/lib/constants/datas';
+import { INSTRUMENTS } from '@/lib/constants/datas';
 import { useTopInstruments } from '@/queries/packages';
 
 const InstrumentChart = () => {
@@ -14,8 +14,8 @@ const InstrumentChart = () => {
   const processedTopInstrumentData = (
     topInstrumentsData?.map((instrument) => ({
       ...instrument,
-      instrument: InstrumentsConstant[instrument.instrument - 1] || instrument.instrument,
-      fill: `var(--color-${InstrumentsConstant[instrument.instrument - 1]})`
+      instrument: INSTRUMENTS[instrument.instrument - 1] || instrument.instrument,
+      fill: `var(--color-${INSTRUMENTS[instrument.instrument - 1]})`
     })) || []
   ).sort((a, b) => Number(b.count ?? 0) - Number(a.count ?? 0));
 

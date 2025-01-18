@@ -49,6 +49,9 @@ const RevenueCharts = () => {
             <div className="flex items-center space-x-8">
               <div className="flex flex-col items-start">
                 <p>Year: </p>
+                {/* Select only accepts string but if i pass in string it doesn't show up in the select,
+                if i pass in number it shows up 
+                @ts-expect-error */}
                 <Select onValueChange={handleYearChange} value={selectedYear}>
                   <SelectTrigger>
                     <SelectValue placeholder={selectedYear} />
