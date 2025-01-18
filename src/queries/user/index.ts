@@ -1,23 +1,12 @@
-import { aggregate } from '@directus/sdk';
 import { useQuery } from '@tanstack/react-query';
 
 import { USER_COUNT_QUERY_KEY } from '@/lib/constants/queryKeys';
-import directus from '@/lib/directus';
+import { getUserCountByRole } from '@/repositories/user';
 
-export const useUserCount = () => {
+export const useUserCountByRoles = () => {
   const result = useQuery({
     queryKey: [USER_COUNT_QUERY_KEY],
-    queryFn: async () => {
-      const response = await directus.request(
-        aggregate('directus_users', {
-          aggregate: {
-            count: '*'
-          },
-          groupBy: ['role']
-        })
-      );
-      return response;
-    }
+    queryFn: getUserCountByRole
   });
 
   return result;

@@ -12,10 +12,10 @@ import { useInstrumentCount } from '@/queries/instruments';
 import { useLessonCount } from '@/queries/lessons';
 import { usePackageCount } from '@/queries/packages';
 import { useRevenueSum } from '@/queries/payments';
-import { useUserCount } from '@/queries/user';
+import { useUserCountByRoles } from '@/queries/user';
 
 const HomePage = () => {
-  const userCountQuery = useUserCount();
+  const userCountQuery = useUserCountByRoles();
   const lessonCountQuery = useLessonCount();
   const instrumentCountQuery = useInstrumentCount();
   const packageCountQuery = usePackageCount();

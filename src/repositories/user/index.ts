@@ -1,9 +1,15 @@
-import { User } from './types';
+import { aggregate } from '@directus/sdk';
 
-export const getUsers = async () => {
-  const response = await fetch('https://jsonplaceholder.typicode.com/users').then(
-    (res) => res.json() as Promise<User[]>
+import directus from '@/lib/directus';
+
+export const getUserCountByRole = async () => {
+  const response = await directus.request(
+    aggregate('directus_users', {
+      aggregate: {
+        count: '*'
+      },
+      groupBy: ['role']
+    })
   );
-
   return response;
 };
