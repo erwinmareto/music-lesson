@@ -1,11 +1,13 @@
-"use client";
+'use client';
 
-import { useState } from "react";
+import { useState } from 'react';
 
-import { Menu, Music } from "lucide-react";
-import Link from "next/link";
-import MobileMenu from "./MobileMenu";
-import { cn } from "@/lib/utils";
+import { Menu, Music } from 'lucide-react';
+import Link from 'next/link';
+
+import { cn } from '@/lib/utils';
+
+import MobileMenu from './MobileMenu';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -39,13 +41,7 @@ const Navbar = () => {
           </li>
         </ul>
 
-        <Menu
-          className={cn(
-            "w-8 h-8 transition-transform lg:hidden",
-            isOpen && "rotate-90",
-          )}
-          onClick={handleMenu}
-        />
+        <Menu className={cn('w-8 h-8 transition-transform lg:hidden', isOpen && 'rotate-90')} onClick={handleMenu} />
       </nav>
       {isOpen && <MobileMenu />}
     </header>

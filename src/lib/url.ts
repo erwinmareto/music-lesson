@@ -1,6 +1,6 @@
 export const combineSearchParams = (
   searchParams: string | URLSearchParams,
-  newParams: Record<string, string>,
+  newParams: Record<string, string>
 ): URLSearchParams => {
   const params = new URLSearchParams(searchParams);
   Object.keys(newParams).forEach((key) => {
@@ -11,7 +11,7 @@ export const combineSearchParams = (
 
 export const removeSearchParams = (
   searchParams: string | URLSearchParams,
-  paramsToRemove: string[],
+  paramsToRemove: string[]
 ): URLSearchParams => {
   const params = new URLSearchParams(searchParams);
   paramsToRemove.forEach((key) => {

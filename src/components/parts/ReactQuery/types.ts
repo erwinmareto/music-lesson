@@ -1,4 +1,4 @@
-import { UseQueryResult, UseSuspenseQueryResult } from "@tanstack/react-query";
+import { UseQueryResult, UseSuspenseQueryResult } from '@tanstack/react-query';
 
 export type ReactQueryProps<T> = {
   queryResult: UseQueryResult<T> | UseSuspenseQueryResult<T>;

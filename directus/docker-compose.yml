@@ -8,12 +8,12 @@ services:
       - ./uploads:/directus/uploads
       - ./extensions:/directus/extensions
     environment:
-      SECRET: "f$Dbuc8Zh9UW&r"
-      ADMIN_EMAIL: "test@test.com"
-      ADMIN_PASSWORD: "interview"
-      DB_CLIENT: "sqlite3"
-      DB_FILENAME: "/directus/database/data.db"
-      WEBSOCKETS_ENABLED: "true"
-      PUBLIC_URL: "http://localhost:8055"
-      CORS_ENABLED: "true"
-      CORS_ORIGIN: "http://localhost:3000"
+      SECRET: 'f$Dbuc8Zh9UW&r'
+      ADMIN_EMAIL: 'test@test.com'
+      ADMIN_PASSWORD: 'interview'
+      DB_CLIENT: 'sqlite3'
+      DB_FILENAME: '/directus/database/data.db'
+      WEBSOCKETS_ENABLED: 'true'
+      PUBLIC_URL: 'http://localhost:8055'
+      CORS_ENABLED: 'true'
+      CORS_ORIGIN: 'http://localhost:3000'

@@ -1,29 +1,11 @@
-"use client";
+'use client';
 
-import {
-  Bar,
-  BarChart,
-  CartesianGrid,
-  LabelList,
-  XAxis,
-  YAxis,
-} from "recharts";
+import { Bar, BarChart, CartesianGrid, LabelList, XAxis, YAxis } from 'recharts';
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
-import { useTopInstruments } from "@/queries/packages";
-import { InstrumentsConstant } from "@/lib/constants/datas";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
+import { InstrumentsConstant } from '@/lib/constants/datas';
+import { useTopInstruments } from '@/queries/packages';
 
 const InstrumentChart = () => {
   const { data: topInstrumentsData } = useTopInstruments();
@@ -32,53 +14,52 @@ const InstrumentChart = () => {
   const processedTopInstrumentData = (
     topInstrumentsData?.map((instrument) => ({
       ...instrument,
-      instrument:
-        InstrumentsConstant[instrument.instrument - 1] || instrument.instrument,
-      fill: `var(--color-${InstrumentsConstant[instrument.instrument - 1]})`,
+      instrument: InstrumentsConstant[instrument.instrument - 1] || instrument.instrument,
+      fill: `var(--color-${InstrumentsConstant[instrument.instrument - 1]})`
     })) || []
   ).sort((a, b) => Number(b.count ?? 0) - Number(a.count ?? 0));
 
   const chartConfig = {
     Piano: {
-      label: "Piano",
-      color: "hsl(0, 70%, 40%)", // Red
+      label: 'Piano',
+      color: 'hsl(0, 70%, 40%)' // Red
     },
     Violin: {
-      label: "Violin",
-      color: "hsl(60, 70%, 40%)", // Yellow
+      label: 'Violin',
+      color: 'hsl(60, 70%, 40%)' // Yellow
     },
     Cello: {
-      label: "Cello",
-      color: "hsl(210, 70%, 40%)", // Sky Blue
+      label: 'Cello',
+      color: 'hsl(210, 70%, 40%)' // Sky Blue
     },
     Guitar: {
-      label: "Guitar",
-      color: "hsl(120, 70%, 40%)", // Green
+      label: 'Guitar',
+      color: 'hsl(120, 70%, 40%)' // Green
     },
     Percussion: {
-      label: "Percussion",
-      color: "hsl(240, 70%, 40%)", // Blue
+      label: 'Percussion',
+      color: 'hsl(240, 70%, 40%)' // Blue
     },
     Viola: {
-      label: "Viola",
-      color: "hsl(300, 70%, 40%)", // Purple
+      label: 'Viola',
+      color: 'hsl(300, 70%, 40%)' // Purple
     },
     Clarinet: {
-      label: "Clarinet",
-      color: "hsl(90, 70%, 40%)", // Lime
+      label: 'Clarinet',
+      color: 'hsl(90, 70%, 40%)' // Lime
     },
     Harp: {
-      label: "Harp",
-      color: "hsl(270, 70%, 40%)", // Violet
+      label: 'Harp',
+      color: 'hsl(270, 70%, 40%)' // Violet
     },
     Trumpet: {
-      label: "Trumpet",
-      color: "hsl(30, 70%, 40%)", // Orange
+      label: 'Trumpet',
+      color: 'hsl(30, 70%, 40%)' // Orange
     },
     Drums: {
-      label: "Drums",
-      color: "hsl(180, 70%, 40%)", // Cyan
-    },
+      label: 'Drums',
+      color: 'hsl(180, 70%, 40%)' // Cyan
+    }
   } satisfies ChartConfig;
 
   return (
@@ -94,36 +75,15 @@ const InstrumentChart = () => {
             data={processedTopInstrumentData}
             layout="vertical"
             margin={{
-              right: 16,
+              right: 16
             }}
           >
             <CartesianGrid horizontal={false} />
-            <YAxis
-              dataKey="instrument"
-              type="category"
-              tickLine={false}
-              tickMargin={10}
-              axisLine={false}
-              hide
-            />
+            <YAxis dataKey="instrument" type="category" tickLine={false} tickMargin={10} axisLine={false} hide />
             <XAxis dataKey="count" type="number" hide />
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent indicator="line" />}
-            />
-            <Bar
-              dataKey="count"
-              layout="vertical"
-              fill="var(--color-desktop)"
-              radius={4}
-            >
-              <LabelList
-                dataKey="instrument"
-                position="insideLeft"
-                offset={8}
-                className="fill-white"
-                fontSize={12}
-              />
+            <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="line" />} />
+            <Bar dataKey="count" layout="vertical" fill="var(--color-desktop)" radius={4}>
+              <LabelList dataKey="instrument" position="insideLeft" offset={8} className="fill-white" fontSize={12} />
             </Bar>
           </BarChart>
         </ChartContainer>

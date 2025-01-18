@@ -1,20 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
-import {
-  getPackageCount,
-  getPackages,
-  getTopInstruments,
-} from "@/repositories/packages";
-import {
-  PACKAGE_COUNT_QUERY_KEY,
-  PACKAGE_QUERY_KEY,
-  TOP_INSTRUMENTS_QUERY_KEY,
-} from "@/lib/constants/queryKeys";
-import {
-  checkIsFiltersEmpty,
-  Filters,
-  getFilters,
-  getFiltersQueryKeys,
-} from "@/lib/filter";
+import { useQuery } from '@tanstack/react-query';
+
+import { PACKAGE_COUNT_QUERY_KEY, PACKAGE_QUERY_KEY, TOP_INSTRUMENTS_QUERY_KEY } from '@/lib/constants/queryKeys';
+import { checkIsFiltersEmpty, Filters, getFilters, getFiltersQueryKeys } from '@/lib/filter';
+import { getPackageCount, getPackages, getTopInstruments } from '@/repositories/packages';
 
 export const usePackageCount = (filters?: Filters[]) => {
   const packageCountFilters = filters ? getFilters(filters) : {};
@@ -22,7 +10,7 @@ export const usePackageCount = (filters?: Filters[]) => {
   const filtersQueryKeys = filters ? getFiltersQueryKeys(filters) : [];
   const result = useQuery({
     queryKey: [PACKAGE_COUNT_QUERY_KEY, ...filtersQueryKeys],
-    queryFn: () => getPackageCount(packageCountFilters),
+    queryFn: () => getPackageCount(packageCountFilters)
   });
 
   return result;
@@ -31,7 +19,7 @@ export const usePackageCount = (filters?: Filters[]) => {
 export const useTopInstruments = () => {
   const result = useQuery({
     queryKey: [TOP_INSTRUMENTS_QUERY_KEY],
-    queryFn: getTopInstruments,
+    queryFn: getTopInstruments
   });
 
   return result;
@@ -46,7 +34,7 @@ export const usePackages = (page: number, filters: Filters[]) => {
 
   const result = useQuery({
     queryKey: [PACKAGE_QUERY_KEY, page, ...filtersQueryKeys],
-    queryFn: () => getPackages(page, packageFilters, isFiltersEmpty),
+    queryFn: () => getPackages(page, packageFilters, isFiltersEmpty)
   });
 
   return result;

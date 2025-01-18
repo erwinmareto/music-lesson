@@ -1,55 +1,38 @@
-"use client";
+'use client';
 
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
+import { useState } from 'react';
 
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { useRevenueByMonth } from "@/queries/payments";
-import { MONTHS } from "@/lib/constants/datas";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { useState } from "react";
+import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts';
+
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MONTHS } from '@/lib/constants/datas';
+import { useRevenueByMonth } from '@/queries/payments';
 
 const RevenueCharts = () => {
   const { data: revenueByMonthData } = useRevenueByMonth();
-  const [selectedYear, setSelectedYear] = useState(2024); // Default to 2024 (supposed to be the current year but there are no datas for 2025)
+  // Default to 2024 (supposed to be the current year but there are no datas for 2025)
+  const [selectedYear, setSelectedYear] = useState(2024);
 
   const handleYearChange = (year: number) => {
     setSelectedYear(year);
   };
 
-  const availableYears = Array.from(
-    new Set(revenueByMonthData?.map((item) => item.payment_date_year)),
-  );
+  const availableYears = Array.from(new Set(revenueByMonthData?.map((item) => item.payment_date_year)));
 
   const processedData = revenueByMonthData
     ?.filter((item) => item.payment_date_year == selectedYear)
     .map((item) => ({
       month: MONTHS[item.payment_date_month - 1],
-      revenue: item.sum.rate,
+      revenue: item.sum.rate
     }));
 
   const chartConfig = {
     revenue: {
-      label: "Revenue",
-      color: "hsl(var(--chart-2))",
-    },
+      label: 'Revenue',
+      color: 'hsl(var(--chart-2))'
+    }
   } satisfies ChartConfig;
 
   return (
@@ -59,8 +42,7 @@ const RevenueCharts = () => {
           <div className="space-y-1.5">
             <CardTitle>Revenue Chart</CardTitle>
             <CardDescription className="text-xs">
-              Tracks the financial performance of the platform, highlighting
-              revenue growth or dips.
+              Tracks the financial performance of the platform, highlighting revenue growth or dips.
             </CardDescription>
           </div>
           {processedData && (
@@ -86,22 +68,14 @@ const RevenueCharts = () => {
                   <p className="max-sm:text-sm">Highest Revenue: </p>
                   <p className="font-semibold text-2xl">
                     {/* get the highest revenue */}
-                    {Math.max(
-                      ...processedData.map((item) =>
-                        parseInt(item.revenue as string),
-                      ),
-                    )}
+                    {Math.max(...processedData.map((item) => parseInt(item.revenue as string)))}
                   </p>
                 </div>
                 <div>
                   <p className="max-sm:text-sm">Lowest Revenue: </p>
                   <p className="font-semibold text-2xl">
                     {/* get the lowest revenue */}
-                    {Math.min(
-                      ...processedData.map((item) =>
-                        parseInt(item.revenue as string),
-                      ),
-                    )}
+                    {Math.min(...processedData.map((item) => parseInt(item.revenue as string)))}
                   </p>
                 </div>
               </div>
@@ -117,7 +91,7 @@ const RevenueCharts = () => {
             data={processedData}
             margin={{
               left: 12,
-              right: 12,
+              right: 12
             }}
           >
             <CartesianGrid vertical={false} />
@@ -128,10 +102,7 @@ const RevenueCharts = () => {
               tickMargin={8}
               tickFormatter={(value) => value.slice(0, 3)}
             />
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent indicator="line" />}
-            />
+            <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="line" />} />
             <Area
               dataKey="revenue"
               type="natural"

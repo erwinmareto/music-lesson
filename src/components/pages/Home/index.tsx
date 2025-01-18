@@ -1,18 +1,18 @@
-"use client";
+'use client';
 
-import { BookAudio, CircleDollarSign, Music2, Package } from "lucide-react";
+import { BookAudio, CircleDollarSign, Music2, Package } from 'lucide-react';
 
-import OverviewCard from "@/components/parts/OverviewCard";
-import RevenueCharts from "@/components/parts/Charts/RevenueChart";
-import LessonChart from "@/components/parts/Charts/LessonChart";
-import InstrumentChart from "@/components/parts/Charts/InstrumentsChart";
-import { useUserCount } from "@/queries/user";
-import ReactQuery from "@/components/parts/ReactQuery";
-import { useLessonCount } from "@/queries/lessons";
-import { useInstrumentCount } from "@/queries/instruments";
-import { usePackageCount } from "@/queries/packages";
-import { useRevenueSum } from "@/queries/payments";
-import { UserCountConstant } from "@/lib/constants/datas";
+import InstrumentChart from '@/components/parts/Charts/InstrumentsChart';
+import LessonChart from '@/components/parts/Charts/LessonChart';
+import RevenueCharts from '@/components/parts/Charts/RevenueChart';
+import OverviewCard from '@/components/parts/OverviewCard';
+import ReactQuery from '@/components/parts/ReactQuery';
+import { UserCountConstant } from '@/lib/constants/datas';
+import { useInstrumentCount } from '@/queries/instruments';
+import { useLessonCount } from '@/queries/lessons';
+import { usePackageCount } from '@/queries/packages';
+import { useRevenueSum } from '@/queries/payments';
+import { useUserCount } from '@/queries/user';
 
 const HomePage = () => {
   const userCountQuery = useUserCount();
@@ -37,9 +37,7 @@ const HomePage = () => {
                     key={index}
                     icon={item.icon}
                     category={item.category}
-                    total={parseInt(
-                      data?.[index].count as string,
-                    ).toLocaleString()}
+                    total={parseInt(data?.[index].count as string).toLocaleString()}
                     isUser
                   />
                 ))}
@@ -64,11 +62,7 @@ const HomePage = () => {
           <ReactQuery
             queryResult={lessonCountQuery}
             render={(data) => (
-              <OverviewCard
-                icon={<BookAudio />}
-                category="lessons"
-                total={parseInt(data as string).toLocaleString()}
-              />
+              <OverviewCard icon={<BookAudio />} category="lessons" total={parseInt(data as string).toLocaleString()} />
             )}
           />
 
@@ -76,11 +70,7 @@ const HomePage = () => {
           <ReactQuery
             queryResult={packageCountQuery}
             render={(data) => (
-              <OverviewCard
-                icon={<Package />}
-                category="packages"
-                total={parseInt(data as string).toLocaleString()}
-              />
+              <OverviewCard icon={<Package />} category="packages" total={parseInt(data as string).toLocaleString()} />
             )}
           />
 
@@ -91,7 +81,8 @@ const HomePage = () => {
               <OverviewCard
                 icon={<CircleDollarSign />}
                 category="revenue"
-                // @ts-expect-error - there is "rate" data inside of data[0].sum but TS is saying .sum is a string when it is an object
+                // @ts-expect-error
+                // there is "rate" data inside of data[0].sum but TS is saying .sum is a string when it is an object
                 total={parseFloat(data[0].sum?.rate).toLocaleString()}
               />
             )}

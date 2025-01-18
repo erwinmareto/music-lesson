@@ -1,5 +1,6 @@
-import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { Button } from '@/components/ui/button';
 
 interface PaginationControlsProps {
   currentPage: number;
@@ -14,7 +15,7 @@ const PaginationControls = ({
   totalPages,
   hasMorePage,
   handleNextPage,
-  handlePreviousPage,
+  handlePreviousPage
 }: PaginationControlsProps) => {
   return (
     <div className="flex items-center justify-end gap-8 my-2">

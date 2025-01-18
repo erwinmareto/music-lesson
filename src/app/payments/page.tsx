@@ -1,5 +1,6 @@
-import PaymentsPage from "@/components/pages/Payments";
-import { Suspense } from "react";
+import { Suspense } from 'react';
+
+import PaymentsPage from '@/components/pages/Payments';
 
 export default function Lessons() {
   return (

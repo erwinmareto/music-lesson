@@ -1,12 +1,8 @@
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
-import useTimeout from "./useTimeout";
+import useTimeout from './useTimeout';
 
-const useDebounce = (
-  callback: () => void,
-  delay: number,
-  dependencies: React.DependencyList,
-) => {
+const useDebounce = (callback: () => void, delay: number, dependencies: React.DependencyList) => {
   const { reset, clear } = useTimeout(() => {
     callback();
   }, delay);
