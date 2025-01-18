@@ -1,26 +1,15 @@
-import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 export interface SelectInputProps {
   id: string;
   label: string;
   value: string;
   options: string[];
+  // eslint-disable-next-line no-unused-vars
   onChange: (value: string) => void;
 }
-const SelectInput = ({
-  id,
-  label,
-  value,
-  options,
-  onChange,
-}: SelectInputProps) => {
+const SelectInput = ({ id, label, value, options, onChange }: SelectInputProps) => {
   return (
     <div className="flex flex-col gap-2">
       <Label htmlFor={id}>{label}</Label>

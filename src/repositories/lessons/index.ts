@@ -1,26 +1,16 @@
-import { aggregate, readItems } from "@directus/sdk";
-import directus from "@/lib/directus";
+import { aggregate, readItems } from '@directus/sdk';
 
-export const getLessons = async (
-  page: number,
-  filter: Record<string, unknown>,
-  isFilterEmpty: boolean,
-) => {
+import directus from '@/lib/directus';
+
+export const getLessons = async (page: number, filter: Record<string, unknown>, isFilterEmpty: boolean) => {
   const response = await directus.request(
-    readItems("lessons", {
-      fields: [
-        "id",
-        "status",
-        "start_datetime",
-        "package.name",
-        "teacher.first_name",
-        "teacher.last_name",
-      ],
+    readItems('lessons', {
+      fields: ['id', 'status', 'start_datetime', 'package.name', 'teacher.first_name', 'teacher.last_name'],
       limit: 10,
       page: page,
       filter: filter,
-      sort: [isFilterEmpty ? "" : "-start_datetime"],
-    }),
+      sort: [isFilterEmpty ? '' : '-start_datetime']
+    })
   );
 
   return response;
@@ -28,14 +18,14 @@ export const getLessons = async (
 
 export const getLessonCount = async (filter?: Record<string, unknown>) => {
   const response = await directus.request(
-    aggregate("lessons", {
+    aggregate('lessons', {
       aggregate: {
-        count: "*",
+        count: '*'
       },
       query: {
-        filter: filter,
-      },
-    }),
+        filter: filter
+      }
+    })
   );
 
   return response[0].count;
@@ -43,12 +33,12 @@ export const getLessonCount = async (filter?: Record<string, unknown>) => {
 
 export const getLessonByStatusCount = async () => {
   const response = await directus.request(
-    aggregate("lessons", {
+    aggregate('lessons', {
       aggregate: {
-        count: "*",
+        count: '*'
       },
-      groupBy: ["status"],
-    }),
+      groupBy: ['status']
+    })
   );
 
   return response;

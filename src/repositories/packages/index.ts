@@ -1,16 +1,17 @@
-import { aggregate, readItems } from "@directus/sdk";
-import directus from "@/lib/directus";
+import { aggregate, readItems } from '@directus/sdk';
+
+import directus from '@/lib/directus';
 
 export const getPackageCount = async (filter?: Record<string, unknown>) => {
   const response = await directus.request(
-    aggregate("packages", {
+    aggregate('packages', {
       aggregate: {
-        count: "*",
+        count: '*'
       },
       query: {
-        filter: filter,
-      },
-    }),
+        filter: filter
+      }
+    })
   );
 
   return response[0].count;
@@ -18,39 +19,35 @@ export const getPackageCount = async (filter?: Record<string, unknown>) => {
 
 export const getTopInstruments = async () => {
   const response = await directus.request(
-    aggregate("packages", {
+    aggregate('packages', {
       aggregate: {
-        count: "*",
+        count: '*'
       },
-      groupBy: ["instrument"],
-    }),
+      groupBy: ['instrument']
+    })
   );
 
   return response;
 };
 
-export const getPackages = async (
-  page: number,
-  filter: Record<string, unknown>,
-  isFilterEmpty: boolean,
-) => {
+export const getPackages = async (page: number, filter: Record<string, unknown>, isFilterEmpty: boolean) => {
   const response = await directus.request(
-    readItems("packages", {
+    readItems('packages', {
       fields: [
-        "id",
-        "name",
-        "student.first_name",
-        "instrument.name",
-        "start_datetime",
-        "end_datetime",
-        "count(lessons)",
-        "duration",
+        'id',
+        'name',
+        'student.first_name',
+        'instrument.name',
+        'start_datetime',
+        'end_datetime',
+        'count(lessons)',
+        'duration'
       ],
       limit: 10,
       page: page,
       filter: filter,
-      sort: [isFilterEmpty ? "" : "-start_datetime"],
-    }),
+      sort: [isFilterEmpty ? '' : '-start_datetime']
+    })
   );
 
   return response;

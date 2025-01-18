@@ -1,5 +1,6 @@
-import PackagesPage from "@/components/pages/packages";
-import { Suspense } from "react";
+import { Suspense } from 'react';
+
+import PackagesPage from '@/components/pages/packages';
 
 export default function Lessons() {
   return (

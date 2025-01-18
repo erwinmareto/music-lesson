@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { ColumnDef } from "@tanstack/react-table";
-import { format, parseISO } from "date-fns";
+import { ColumnDef } from '@tanstack/react-table';
+import { format, parseISO } from 'date-fns';
 
 export interface InstrumentsData {
   id: number;
@@ -33,7 +33,7 @@ export interface LessonData {
     name: string;
   };
   start_datetime: string;
-  status: "attended" | "missed" | "cancelled";
+  status: 'attended' | 'missed' | 'cancelled';
   teacher: {
     first_name: string;
     last_name: string;
@@ -53,127 +53,127 @@ export interface PaymentData {
 
 export const lessonsColumns: ColumnDef<LessonData>[] = [
   {
-    accessorKey: "id",
-    header: "ID",
+    accessorKey: 'id',
+    header: 'ID'
   },
   {
-    accessorKey: "package.name",
-    header: "Package Name",
+    accessorKey: 'package.name',
+    header: 'Package Name'
   },
 
   {
-    accessorKey: "status",
-    header: "Status",
+    accessorKey: 'status',
+    header: 'Status'
   },
   {
-    accessorKey: "teacher.first_name",
-    header: "Teacher",
+    accessorKey: 'teacher.first_name',
+    header: 'Teacher'
   },
   {
-    accessorKey: "start_datetime",
-    header: "Start Date",
+    accessorKey: 'start_datetime',
+    header: 'Start Date',
     cell: ({ row }) => {
-      const parsedDate = parseISO(row.getValue<string>("start_datetime"));
-      const formattedDate = format(parsedDate, "MMM d, yyyy");
+      const parsedDate = parseISO(row.getValue<string>('start_datetime'));
+      const formattedDate = format(parsedDate, 'MMM d, yyyy');
       return <p>{formattedDate}</p>;
-    },
-  },
+    }
+  }
 ];
 
 export const instrumentsColumns: ColumnDef<InstrumentsData>[] = [
   {
-    accessorKey: "id",
-    header: "ID",
+    accessorKey: 'id',
+    header: 'ID'
   },
   {
-    accessorKey: "name",
-    header: "Name",
+    accessorKey: 'name',
+    header: 'Name'
   },
   {
-    accessorKey: "students_count",
-    header: "Student Count",
+    accessorKey: 'students_count',
+    header: 'Student Count'
   },
   {
-    accessorKey: "teachers_count",
-    header: "Teacher Count",
-  },
+    accessorKey: 'teachers_count',
+    header: 'Teacher Count'
+  }
 ];
 
 export const packagesColumns: ColumnDef<PackagesData>[] = [
   {
-    accessorKey: "id",
-    header: "ID",
+    accessorKey: 'id',
+    header: 'ID'
   },
   {
-    accessorKey: "name",
-    header: "Package Name",
+    accessorKey: 'name',
+    header: 'Package Name'
   },
 
   {
-    accessorKey: "student.first_name",
-    header: "Student",
+    accessorKey: 'student.first_name',
+    header: 'Student'
   },
   {
-    accessorKey: "instrument.name",
-    header: "Instrument",
+    accessorKey: 'instrument.name',
+    header: 'Instrument'
   },
   {
-    accessorKey: "lessons_count",
-    header: "Lessons Amount",
+    accessorKey: 'lessons_count',
+    header: 'Lessons Amount'
   },
   {
-    accessorKey: "duration",
-    header: "Duration",
+    accessorKey: 'duration',
+    header: 'Duration'
   },
   {
-    accessorKey: "start_datetime",
-    header: "Start Date",
+    accessorKey: 'start_datetime',
+    header: 'Start Date',
     cell: ({ row }) => {
-      const parsedDate = parseISO(row.getValue<string>("start_datetime"));
-      const formattedDate = format(parsedDate, "MMM d, yyyy");
+      const parsedDate = parseISO(row.getValue<string>('start_datetime'));
+      const formattedDate = format(parsedDate, 'MMM d, yyyy');
       return <p>{formattedDate}</p>;
-    },
+    }
   },
   {
-    accessorKey: "end_datetime",
-    header: "End Date",
+    accessorKey: 'end_datetime',
+    header: 'End Date',
     cell: ({ row }) => {
-      const parsedDate = parseISO(row.getValue<string>("end_datetime"));
-      const formattedDate = format(parsedDate, "MMM d, yyyy");
+      const parsedDate = parseISO(row.getValue<string>('end_datetime'));
+      const formattedDate = format(parsedDate, 'MMM d, yyyy');
       return <p>{formattedDate}</p>;
-    },
-  },
+    }
+  }
 ];
 
 export const paymentsColumns: ColumnDef<PaymentData>[] = [
   {
-    accessorKey: "id",
-    header: "ID",
+    accessorKey: 'id',
+    header: 'ID'
   },
   {
-    accessorKey: "payment_id",
-    header: "Payment ID",
+    accessorKey: 'payment_id',
+    header: 'Payment ID'
   },
 
   {
-    accessorKey: "currency",
-    header: "Currency",
+    accessorKey: 'currency',
+    header: 'Currency'
   },
   {
-    accessorKey: "rate",
-    header: "Rate",
+    accessorKey: 'rate',
+    header: 'Rate'
   },
   {
-    accessorKey: "package.name",
-    header: "Package Name",
+    accessorKey: 'package.name',
+    header: 'Package Name'
   },
   {
-    accessorKey: "payment_date",
-    header: "Payment Date",
+    accessorKey: 'payment_date',
+    header: 'Payment Date',
     cell: ({ row }) => {
-      const parsedDate = parseISO(row.getValue<string>("payment_date"));
-      const formattedDate = format(parsedDate, "MMM d, yyyy");
+      const parsedDate = parseISO(row.getValue<string>('payment_date'));
+      const formattedDate = format(parsedDate, 'MMM d, yyyy');
       return <p>{formattedDate}</p>;
-    },
-  },
+    }
+  }
 ];

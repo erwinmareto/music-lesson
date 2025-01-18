@@ -1,21 +1,16 @@
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 interface SearchInputProps {
   id: string;
   label: string;
   placeholder: string;
   value: string;
+  // eslint-disable-next-line no-unused-vars
   onChange: (value: string) => void;
 }
 
-const SearchInput = ({
-  id,
-  label,
-  placeholder,
-  value,
-  onChange,
-}: SearchInputProps) => {
+const SearchInput = ({ id, label, placeholder, value, onChange }: SearchInputProps) => {
   return (
     <div className="flex flex-col">
       <div className="space-y-1">

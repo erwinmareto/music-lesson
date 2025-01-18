@@ -1,5 +1,6 @@
-import LessonsPage from "@/components/pages/Lessons";
-import { Suspense } from "react";
+import { Suspense } from 'react';
+
+import LessonsPage from '@/components/pages/Lessons';
 
 export default function Lessons() {
   return (
