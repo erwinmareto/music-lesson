@@ -1,0 +1,22 @@
+# Ignore build output
+.next
+out
+
+# Ignore dependencies
+node_modules
+
+# Ignore static assets
+public
+
+# Ignore environment variables
+.env
+.env.local
+.env.development
+.env.production
+
+# Ignore Prettier configuration
+.prettierrc
+
+# Ignore other configuration files
+.eslintrc
+tsconfig.json
