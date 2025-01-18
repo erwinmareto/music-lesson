@@ -12,7 +12,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import useDebounce from "@/hooks/useDebounce";
 import { combineSearchParams, removeSearchParams } from "@/lib/url";
 import { instrumentsColumns } from "@/components/parts/DataTable/columns";
-import PaginationControls from "@/components/parts/DataTable/pagination";
+import PaginationControls from "@/components/parts/PaginationControls";
 import SearchInput from "@/components/parts/SearchInput";
 
 const InstrumentsPage = () => {

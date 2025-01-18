@@ -12,7 +12,7 @@ import useDebounce from "@/hooks/useDebounce";
 import { combineSearchParams, removeSearchParams } from "@/lib/url";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Filters } from "@/lib/filter";
-import PaginationControls from "@/components/parts/DataTable/pagination";
+import PaginationControls from "@/components/parts/PaginationControls";
 import SearchInput from "@/components/parts/SearchInput";
 import DatePicker from "@/components/parts/DatePicker";
 import SelectInput from "@/components/parts/SelectInput";

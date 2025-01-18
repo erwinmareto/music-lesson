@@ -2,7 +2,7 @@
 
 import DataTable from "@/components/parts/DataTable";
 import { packagesColumns } from "@/components/parts/DataTable/columns";
-import PaginationControls from "@/components/parts/DataTable/pagination";
+import PaginationControls from "@/components/parts/PaginationControls";
 import DatePicker from "@/components/parts/DatePicker";
 import ReactQuery from "@/components/parts/ReactQuery";
 import SearchInput from "@/components/parts/SearchInput";
