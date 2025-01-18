@@ -22,6 +22,7 @@ const PackagesPage = () => {
   const [packageName, setPackageName] = useState('');
   const [instrument, setInstrument] = useState('');
   const [student, setStudent] = useState('');
+  const [duration, setDuration] = useState('');
   const [startDate, setStartDate] = useState<Date>();
   const [endDate, setEndDate] = useState<Date>();
 
@@ -37,6 +38,16 @@ const PackagesPage = () => {
       dataType: 'date'
     },
     { field: 'end_datetime', query: searchParams.get('end'), dataType: 'date' },
+    {
+      field: 'lessons_count',
+      query: searchParams.get('lessons_count'),
+      dataType: 'number'
+    },
+    {
+      field: 'duration',
+      query: searchParams.get('duration'),
+      dataType: 'number'
+    },
     {
       field: ['instrument', 'name'],
       query: searchParams.get('instrument'),
@@ -59,6 +70,10 @@ const PackagesPage = () => {
 
   const handleInstrument = (instrument: string) => {
     setInstrument(instrument);
+  };
+
+  const handleDuration = (duration: string) => {
+    setDuration(duration);
   };
 
   const handleStudent = (student: string) => {
@@ -86,6 +101,7 @@ const PackagesPage = () => {
         'packageName',
         'instrument',
         'student',
+        'duration',
         'start',
         'end'
       ]);
@@ -104,6 +120,10 @@ const PackagesPage = () => {
         paramsObject.student = student;
       }
 
+      if (duration) {
+        paramsObject.duration = duration;
+      }
+
       if (startDate) {
         paramsObject.start = startDate.toISOString().split('T')[0];
       }
@@ -117,7 +137,7 @@ const PackagesPage = () => {
       router.push(`?${newSearchParams.toString()}`);
     },
     300,
-    [packageName, instrument, student, startDate, endDate]
+    [packageName, instrument, student, duration, startDate, endDate]
   );
 
   useEffect(() => {
@@ -145,6 +165,14 @@ const PackagesPage = () => {
           />
 
           <SearchInput id="student" value={student} label="Student" onChange={handleStudent} placeholder="Student" />
+
+          <SearchInput
+            id="duration"
+            label="Duration"
+            placeholder="Duration"
+            value={duration}
+            onChange={handleDuration}
+          />
           <DatePicker label="Start Date" selectedDate={startDate} onSelectDate={setStartDate} />
           <DatePicker label="End Date" selectedDate={endDate} onSelectDate={setEndDate} />
         </div>
