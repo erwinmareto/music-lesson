@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { INSTRUMENT_COUNT_QUERY_KEY, INSTRUMENT_QUERY_KEY } from '@/lib/constants/queryKeys';
+import { INSTRUMENT_COUNT_QUERY_KEY, INSTRUMENT_QUERY_KEY, TOP_INSTRUMENTS_QUERY_KEY } from '@/lib/constants/queryKeys';
 import { Filters, getFilters, getFiltersQueryKeys } from '@/lib/filter';
-import { getInstrumentCount, getInstruments } from '@/repositories/instruments';
+import { getInstrumentCount, getInstruments, getTopInstruments } from '@/repositories/instruments';
 
 export const useInstrumentCount = (filters?: Filters[]) => {
   const instrumentsCountFilters = filters ? getFilters(filters) : {};
@@ -25,6 +25,15 @@ export const useInstruments = (page: number, filters: Filters[]) => {
   const result = useQuery({
     queryKey: [INSTRUMENT_QUERY_KEY, page, ...filtersQueryKeys],
     queryFn: () => getInstruments(page, instrumentsFilters)
+  });
+
+  return result;
+};
+
+export const useTopInstruments = () => {
+  const result = useQuery({
+    queryKey: [TOP_INSTRUMENTS_QUERY_KEY],
+    queryFn: getTopInstruments
   });
 
   return result;

@@ -5,7 +5,7 @@ import { Bar, BarChart, CartesianGrid, LabelList, XAxis, YAxis } from 'recharts'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { INSTRUMENTS } from '@/lib/constants/datas';
-import { useTopInstruments } from '@/queries/packages';
+import { useTopInstruments } from '@/queries/instruments';
 
 const InstrumentChart = () => {
   const { data: topInstrumentsData } = useTopInstruments();

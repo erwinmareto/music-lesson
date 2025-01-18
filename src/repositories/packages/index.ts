@@ -17,19 +17,6 @@ export const getPackageCount = async (filter?: Record<string, unknown>) => {
   return response[0].count;
 };
 
-export const getTopInstruments = async () => {
-  const response = await directus.request(
-    aggregate('packages', {
-      aggregate: {
-        count: '*'
-      },
-      groupBy: ['instrument']
-    })
-  );
-
-  return response;
-};
-
 export const getPackages = async (page: number, filter: Record<string, unknown>, isFilterEmpty: boolean) => {
   const response = await directus.request(
     readItems('packages', {

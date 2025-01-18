@@ -29,3 +29,16 @@ export const getInstruments = async (page: number, filter: Record<string, unknow
 
   return response;
 };
+
+export const getTopInstruments = async () => {
+  const response = await directus.request(
+    aggregate('packages', {
+      aggregate: {
+        count: '*'
+      },
+      groupBy: ['instrument']
+    })
+  );
+
+  return response;
+};
