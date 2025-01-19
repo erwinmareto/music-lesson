@@ -86,22 +86,43 @@ A page dedicated to displaying the data table for payments with filters.
 ### Charts
 
 - **RevenueChart**: Displays the revenue data for selected years.
+
+  - Parameters:
+    - No props required - uses `useRevenueByMonth` hook internally
+
 - **InstrumentsChart**: Shows the top instruments with the most lessons.
+
+  - Parameters:
+    - No props required - uses `useTopInstruments` hook internally
+
 - **LessonChart**: Shows the ratio of attended and absent lessons.
+  - Parameters:
+    - No props required - uses `useLessonByStatusCount` hook internally
 
 ### DataTable
 
 - **DataTable**: A reusable data table component that supports filtering and pagination.
+  - Parameters:
+    - `columns: ColumnDef<TData, TValue>[]` - Column definitions for the table
+    - `data: TData[]` - Array of data items to display
 
-### OverviewCards
+### OverviewCard
 
-- **OverviewCards**: A reusable card to display count data with an icon.
+- **OverviewCard**: A reusable card to display count data with an icon.
+  - Parameters:
+    - `icon: React.ReactNode` - Icon component to display
+    - `category: string` - Category name (used for navigation link)
+    - `total: number` - Total count/value to display
+    - `isUser?: boolean` - Optional flag to use user-specific styling
 
-### Parts
+### ReactQuery
 
-- **Charts**: Contains various chart components like `RevenueChart` and `InstrumentsChart`.
-- **DataTable**: Contains the `DataTable` component for displaying tabular data.
-- **OverviewCards**: Contains the `OverviewCards` component for displaying summary information.
+- **ReactQuery**: A reusable component for managing server state with React Query.
+  - Parameters:
+    - `queryResult: UseQueryResult<T>` - Result from a React Query hook
+    - `render: (data: T) => React.ReactNode` - Render function for success state
+    - `renderLoading?: React.ReactNode` - Optional custom loading state
+    - `renderError?: React.ReactNode` - Optional custom error state
 
 ### Filters
 
@@ -110,21 +131,124 @@ A page dedicated to displaying the data table for payments with filters.
 - **DatePicker**: A reusable date picker component for selecting dates.
 - **PaginationControls**: A component for pagination controls.
 
-### ReactQuery
+### Parts
 
-- **ReactQuery**: A reusable component for managing server state with React Query.
+- **SearchInput**: A reusable search input component.
+
+  - Parameters:
+    - `id: string` - Unique identifier for the input element
+    - `label: string` - Label text for the input
+    - `placeholder: string` - Placeholder text for the input field
+    - `value: string` - Current value of the input
+    - `onChange: (value: string) => void` - Callback function when input value changes
+
+- **SelectInput**: A reusable select/dropdown component.
+
+  - Parameters:
+    - `id: string` - Unique identifier for the select element
+    - `label: string` - Label text for the select
+    - `value: string` - Current selected value
+    - `options: string[]` - Array of options to display in the dropdown
+    - `onChange: (value: string) => void` - Callback function when selection changes
+
+- **DatePicker**: A reusable date picker component.
+
+  - Parameters:
+    - `label: string` - Label text for the date picker
+    - `selectedDate: Date | undefined` - Currently selected date
+    - `onSelectDate: (date: Date | undefined) => void` - Callback function when date is selected
+
+- **PaginationControls**: A component for navigation through paginated data.
+  - Parameters:
+    - `currentPage: number` - Current active page number
+    - `totalPages: number` - Total number of available pages
+    - `hasMorePage: boolean` - Whether there are more pages available
+    - `handleNextPage: () => void` - Callback function for next page navigation
+    - `handlePreviousPage: () => void` - Callback function for previous page navigation
 
 ## Hooks
 
 ### useDebounce
 
-A custom hook to debounce a callback function.
+A custom hook that delays the execution of a callback function until after a specified delay has elapsed since the last call.
+
+```typescript
+useDebounce(callback: () => void, delay: number, dependencies: React.DependencyList)
+```
+
+Parameters:
+
+- `callback`: Function to be debounced
+- `delay`: Time in milliseconds to wait before executing the callback
+- `dependencies`: Array of dependencies that will trigger a reset of the debounce timer
+
+Example usage:
+
+```typescript
+useDebounce(
+  () => {
+    // This will only run after 500ms of no changes to searchTerm
+    fetchSearchResults(searchTerm);
+  },
+  500,
+  [searchTerm]
+);
+```
 
 ### useTimeout
 
-A custom hook to manage timeouts.
+A custom hook that provides controlled timeout functionality with clear and reset capabilities.
+
+```typescript
+const { reset, clear } = useTimeout(callback: () => void, delay: number)
+```
+
+Parameters:
+
+- `callback`: Function to be executed after the timeout
+- `delay`: Time in milliseconds before the callback is executed
+
+Returns:
+
+- `reset`: Function to restart the timeout
+- `clear`: Function to cancel the timeout
+
+Example usage:
+
+```typescript
+const { reset, clear } = useTimeout(() => {
+  // This will run after 1000ms unless cleared or reset
+  console.log('Timeout completed');
+}, 1000);
+```
 
 ## Queries
+
+Parameters used across query hooks:
+
+- `page`: number - The current page number for pagination (starts at 1)
+- `filters`: Array of filter objects with the following structure:
+
+```typescript
+interface Filters {
+  field: string | string[]; // The field(s) to filter on
+  query: string | null; // The filter value
+  dataType: 'search' | 'number' | 'date'; // The type of filter to apply
+}
+```
+
+Example usage:
+
+```typescript
+// Search filter
+{ field: 'name', query: 'John', dataType: 'search' }
+
+// Date filter
+{ field: 'created_at', query: '2023-01-01', dataType: 'date' }
+
+// Number filter
+{ field: 'amount', query: '100', dataType: 'number' }
+```
 
 ### Lessons
 
@@ -196,9 +320,20 @@ Repository for managing lesson-related database operations.
 
 #### Functions
 
-- `getLessons({ page, status, filter })`: Fetches paginated lesson data with optional filters
-- `getLessonCount({ status, filter })`: Gets total lesson count with filters
+- `getLessons(params)`: Fetches paginated lesson data with optional filters
+
+  - `page`: number - The current page number (1-based)
+  - `filter`: Record<string, unknown> - Filter conditions for the query
+  - `isFilterEmpty`: boolean - Whether any filters are applied
+    Returns lessons with their status, dates, package, and teacher information.
+
+- `getLessonCount(filter?)`: Gets total lesson count with filters
+
+  - `filter`: (optional) Record<string, unknown> - Filter conditions
+    Returns the total count of lessons matching the filter.
+
 - `getLessonsByStatusCount()`: Retrieves lesson count grouped by status
+  Returns an array of counts grouped by lesson status.
 
 ### Packages
 
@@ -206,8 +341,16 @@ Repository for managing music lesson packages.
 
 #### Functions
 
-- `getPackages({ page, filter })`: Retrieves paginated package data with filters
-- `getPackageCount({ filter })`: Gets total package count with filters
+- `getPackages(params)`: Retrieves paginated package data with filters
+
+  - `page`: number - The current page number (1-based)
+  - `filter`: Record<string, unknown> - Filter conditions for the query
+  - `isFilterEmpty`: boolean - Whether any filters are applied
+    Returns packages with student info, instrument, dates, lesson count and duration.
+
+- `getPackageCount(filter?)`: Gets total package count with filters
+  - `filter`: (optional) Record<string, unknown> - Filter conditions
+    Returns the total count of packages matching the filter.
 
 ### Payments
 
@@ -216,9 +359,21 @@ Repository for handling payment and revenue data.
 #### Functions
 
 - `getRevenueByMonth()`: Retrieves monthly revenue aggregations
-- `getPaymentCount()`: Gets total number of payments
+  Returns an array of revenue sums grouped by month and year.
+
+- `getPaymentCount(filter?)`: Gets total number of payments
+
+  - `filter`: (optional) Record<string, unknown> - Filter conditions
+    Returns the total count of payments matching the filter.
+
 - `getRevenueSum()`: Calculates total revenue
-- `getPayments({ page, filter })`: Fetches paginated and filtered payment records
+  Returns the sum of all payment rates.
+
+- `getPayments(params)`: Fetches paginated and filtered payment records
+  - `page`: number - The current page number (1-based)
+  - `filter`: Record<string, unknown> - Filter conditions for the query
+  - `isFilterEmpty`: boolean - Whether any filters are applied
+    Returns payments with their ID, currency, rate, date and package info.
 
 ### Instruments
 
@@ -226,9 +381,19 @@ Repository for instrument management.
 
 #### Functions
 
-- `getInstrumentCount()`: Gets total number of instruments
-- `getInstruments({ filter })`: Retrieves instrument data with filter capability
+- `getInstrumentCount(filter?)`: Gets total number of instruments
+
+  - `filter`: (optional) Record<string, unknown> - Filter conditions
+    Returns the total count of instruments matching the filter.
+
+- `getInstruments(params)`: Retrieves instrument data with filter capability
+
+  - `page`: number - The current page number (1-based)
+  - `filter`: Record<string, unknown> - Filter conditions for the query
+    Returns instruments with their name and counts of associated students and teachers.
+
 - `getTopInstruments()`: Fetches instruments ranked by lesson count
+  Returns an array of instruments grouped by usage in packages.
 
 ### Users
 
@@ -237,6 +402,7 @@ Repository for managing user-related operations.
 #### Functions
 
 - `getUserCountByRole()`: Fetches total count of users grouped by role.
+  Returns an array of user counts grouped by their role (teacher/student).
 
 ## Library Functions
 
@@ -272,9 +438,11 @@ Repository for managing user-related operations.
   - Authentication handling
   - Default connection to localhost:8055
 
-## Additional Note
+## Troubleshooting Build Errors
 
-If you want to build, you will most likely run into these errors:
+If you encounter the following errors while building the project, you can manually fix them as they are located in the `node_modules` directory. These issues arise due to compatibility problems with React 19, and some libraries have not yet updated their types.
+
+### Error 1: `ReactSVG` Not Exported
 
 ```typescript
 ./node_modules/lucide-react/dist/lucide-react.d.ts:2:10
@@ -287,6 +455,10 @@ Type error: Module '"react"' has no exported member 'ReactSVG'.
   4 | type IconNode = [elementName: keyof ReactSVG, attrs: Record<string, string>][];
   5 | type SVGAttributes = Partial<SVGProps<SVGSVGElement>>;
 ```
+
+**Solution**: Change `ReactSVG` to `SVGElementType`.
+
+### Error 2: `JSX` Namespace Not Found
 
 ```typescript
 ./node_modules/react-day-picker/dist/index.d.ts:26:48
@@ -301,7 +473,11 @@ Type error: Cannot find namespace 'JSX'.
   29 | interface CaptionLabelProps {
 ```
 
-You will have to manually fix them yourself because they are located in the `node_modules`. This is happening because of React 19 and the types in some libraries have not been updated.
+**Solution**: Change `JSX` to `react.JSX`.
+
+Note
+You will need to manually fix these issues in the `node_modules` directory. This is necessary because the types in some libraries have not been updated to be compatible with **React 19**.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
 
 ## License
 
