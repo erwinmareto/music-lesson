@@ -4,6 +4,7 @@ import { useState } from 'react';
 
 import { useRouter, useSearchParams } from 'next/navigation';
 
+import InstrumentRatioChart from '@/components/parts/Charts/InstrumentRatioChart';
 import DataTable from '@/components/parts/DataTable';
 import { instrumentsColumns } from '@/components/parts/DataTable/columns';
 import PaginationControls from '@/components/parts/PaginationControls';
@@ -109,6 +110,8 @@ const InstrumentsPage = () => {
           )}
         />
       </Card>
+
+      <InstrumentRatioChart />
     </div>
   );
 };
